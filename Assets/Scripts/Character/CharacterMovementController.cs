@@ -193,7 +193,7 @@ public class CharacterMovementController : MonoBehaviour
                 isDashing = false;
             }
 
-            UpdateMoveAnimation(0, 0, true, false);
+            UpdateMoveAnimation(0, true, false);
         }
         else
         {
@@ -305,36 +305,25 @@ public class CharacterMovementController : MonoBehaviour
         // ApplyGravity();
 
         // Move Animation
-
-        /*if (m_IsWalking)
-        {
-            animVector /= 2;
-        }*/
-
-        //Vector3 toLockTarget = (characterModel.lockedOnTargetPos - transform.position).normalized;
-        float angleToLockTarget = Vector3.SignedAngle(transform.forward,
-                                      frameOfReference.TransformDirection(
-                                          characterModel.characterInput.Move
-                                              .normalized), Vector3.up) * Mathf.Deg2Rad;
-
-        float curSpeedFactor = HelperUtilities.Remap(curSpeed, 0, m_IsWalking ? m_WalkSpeed : m_RunSpeed, 0, 1) *
-                               characterModel.characterInput.Move.magnitude;
-
-        Vector3 animVector = new Vector3(Mathf.Sin(angleToLockTarget), Mathf.Cos(angleToLockTarget)).normalized *
-                             curSpeedFactor;
+        Vector3 animVector = characterModel.characterInput.Move;
         if (animVector.magnitude > 1)
         {
             animVector.Normalize();
         }
 
-        /*UpdateMoveAnimation(animVector.y, animVector.x,
-            m_CharacterController.isGrounded, !m_IsWalking);*/
+        if (m_IsWalking)
+        {
+            animVector /= 2;
+        }
+
+        float curSpeedFactor = HelperUtilities.Remap(curSpeed, 0, m_IsWalking ? m_WalkSpeed : m_RunSpeed, 0, 1) *
+                               animVector.magnitude;
+        UpdateMoveAnimation(curSpeedFactor, m_CharacterController.isGrounded, !m_IsWalking);
     }
 
-    void UpdateMoveAnimation(float forward, float right, bool isGrounded, bool isSprinting)
+    void UpdateMoveAnimation(float forward, bool isGrounded, bool isSprinting)
     {
         characterModel.animator.SetFloat("Forward", forward);
-        characterModel.animator.SetFloat("Right", right);
 
         characterModel.animator.SetBool("IsGrounded", isGrounded);
         characterModel.animator.SetBool("IsSprinting", isSprinting);
