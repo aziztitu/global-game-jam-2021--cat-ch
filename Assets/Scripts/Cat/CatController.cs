@@ -4,69 +4,50 @@ using UnityEngine;
 
 public class CatController : MonoBehaviour
 {
-    public List<Transform> hidingSpots = new List<Transform>();
     private Transform currentHidingSpot = null;
+    private Transform potentialHidingSpot = null;
 
     public RangeFloat maxMeowTimer = new RangeFloat(0, 0);
     private float currentMeowBuffer = 0;
     public List<AudioClip> meowClips = new List<AudioClip>();
     private AudioSource audioSource;
 
-    public GameObject playerTest;
+    public enum CatState
+    {
+        Hiding, 
+        Running
+    }
 
+    public CatState catState = CatState.Running;
 
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
     }
 
-    public void ChooseNewLocation()
+    public void FindNewHidingSpot()
     {
-        Transform oldHidingSpot = null;
-        if (currentHidingSpot != null)
+        potentialHidingSpot = CatManager.Instance.FindOpenLocation();
+    }
+
+    public void TryMove()
+    {
+        if (!CatManager.Instance.IsLocationOpen(potentialHidingSpot))
         {
-            oldHidingSpot = currentHidingSpot;
+            potentialHidingSpot = CatManager.Instance.FindOpenLocation();
         }
-
-        int randNumb = Random.Range(0, hidingSpots.Count);
-        
-        transform.position = hidingSpots[randNumb].position;
-        currentHidingSpot = hidingSpots[randNumb];
-        hidingSpots.Remove(hidingSpots[randNumb]);
-
-        if (oldHidingSpot != null)
+        else
         {
-            hidingSpots.Add(oldHidingSpot);
+            ChangeCurrentHidingPlace();
         }
     }
 
-    public void ChooseNewLocation(Vector3 playerPos)
+    void ChangeCurrentHidingPlace()
     {
-        Transform oldHidingSpot = null;
-        if (currentHidingSpot != null)
-        {
-            oldHidingSpot = currentHidingSpot;
-        }
+        currentHidingSpot = potentialHidingSpot;
+        CatManager.Instance.RemoveCurrentHidingSpot(currentHidingSpot);
 
-        float max = Mathf.Abs(Vector3.Distance(hidingSpots[0].position, playerPos));
-        int maxIndex = 0;
-        for (int i = 1; i < hidingSpots.Count; i++)
-        {
-             if (Mathf.Abs(Vector3.Distance(hidingSpots[i].position, playerPos)) > max)
-             {
-                max = Mathf.Abs(Vector3.Distance(hidingSpots[i].position, playerPos));
-                maxIndex = i;
-             }
-        }
-
-        transform.position = hidingSpots[maxIndex].position;
-        currentHidingSpot = hidingSpots[maxIndex];
-        hidingSpots.Remove(hidingSpots[maxIndex]);
-
-        if (oldHidingSpot != null)
-        {
-            hidingSpots.Add(oldHidingSpot);
-        }
+        transform.position = currentHidingSpot.position;
     }
 
     void CountDownMeow()
@@ -89,11 +70,7 @@ public class CatController : MonoBehaviour
     private void Update()
     {
         CountDownMeow();
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ChooseNewLocation(playerTest.transform.position);
-        }
 
-        
+
     }
 }
