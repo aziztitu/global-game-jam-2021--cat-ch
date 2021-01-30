@@ -3,7 +3,17 @@ guid: 27eb2d382bd40264391973278c7bd940
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SpruceToon
+    second: {fileID: 2100000, guid: ebeedfc8ea4d5d8419aa760c5ed4e95c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ToonSpruceLeaf
+    second: {fileID: 2100000, guid: 63237d57d6590f4419d2f1fe2ecb6c78, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

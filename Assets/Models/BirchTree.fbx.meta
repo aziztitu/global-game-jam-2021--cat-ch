@@ -3,7 +3,17 @@ guid: 15412c4a35f074743bbdcd5b7f897a38
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ToonBirchFoliage
+    second: {fileID: 2100000, guid: b237b14f459ff1a45a68bfaa53dfb1c7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ToonBirchWood
+    second: {fileID: 2100000, guid: aeefb96944651fa44b3f992edf705a77, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

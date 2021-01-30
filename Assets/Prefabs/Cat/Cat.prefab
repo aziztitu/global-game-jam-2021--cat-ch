@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -227,8 +227,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 151b22b1ed5c99e45b5b4aa3ca861483, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hidingDistance: 0.4
-  inspectingDistance: 0.65
+  hidingDistance: 0.55
+  inspectingDistance: 1.9
   catState: 1
   maxMeowTimer:
     min: 4.5
@@ -241,3 +241,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a35274df4807cb04f9477b28722f5a5d, type: 3}
   - {fileID: 8300000, guid: 16c8700f296e11e4c973f6821685bb94, type: 3}
   - {fileID: 8300000, guid: 35f431c5d1ebaef4a8ce70b907c1cfea, type: 3}
+  tempPlayer: {fileID: 0}
