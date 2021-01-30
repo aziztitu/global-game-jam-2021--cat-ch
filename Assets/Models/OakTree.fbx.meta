@@ -3,7 +3,17 @@ guid: d7b7906e188bc3446be85c117325e2e0
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: OakToon
+    second: {fileID: 2100000, guid: 6a894c5355fddbd47955a787a439e6a8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ToonLeaves
+    second: {fileID: 2100000, guid: 762bda9cbead07343a1f7fac53437c8d, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

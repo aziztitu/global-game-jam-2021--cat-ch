@@ -3,7 +3,12 @@ guid: 6be14ca78067c394386e0b580adb89de
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ToonRock
+    second: {fileID: 2100000, guid: ef6305e8a8b79604aa993efa638ed55b, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

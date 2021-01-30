@@ -3,7 +3,37 @@ guid: 29212c4f8541a4d4396447dd3561379a
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DoorKnobMat
+    second: {fileID: 2100000, guid: b05d8a68d04ee224aa9ba046e4e166d2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: House1DoorMat
+    second: {fileID: 2100000, guid: 0b8d591375cefee4f8610811ab281370, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: House1RoofMat
+    second: {fileID: 2100000, guid: 895d2b8d1c1c08c47abff6f649dc1b21, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: House1TrimMat
+    second: {fileID: 2100000, guid: 568ff78c55543394f94d037ef15ca3c7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: House1wallMat
+    second: {fileID: 2100000, guid: db6e7e588abaa72459d2210d37b76c94, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HouseWindowMat
+    second: {fileID: 2100000, guid: bef0841e78622994a8f64a4ee251eb50, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
