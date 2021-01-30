@@ -371,15 +371,15 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1359814936}
-  - {fileID: 80141499}
   - {fileID: 4416725766285363098}
+  - {fileID: 80141499}
+  - {fileID: 1359814936}
   m_Father: {fileID: 727345771}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -450, y: 0}
+  m_AnchoredPosition: {x: -600, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &512591055
@@ -513,6 +513,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 512591054}
     m_Modifications:
+    - target: {fileID: 800165311232975086, guid: ddc320993bb9a744a8eaa429f86e70ef,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 800165311232975086, guid: ddc320993bb9a744a8eaa429f86e70ef,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 800165311232975086, guid: ddc320993bb9a744a8eaa429f86e70ef,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2051404135}
+    - target: {fileID: 800165311232975086, guid: ddc320993bb9a744a8eaa429f86e70ef,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 800165311232975086, guid: ddc320993bb9a744a8eaa429f86e70ef,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: quitButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 800165311232975086, guid: ddc320993bb9a744a8eaa429f86e70ef,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3484321890300880123, guid: ddc320993bb9a744a8eaa429f86e70ef,
         type: 3}
       propertyPath: m_Name
@@ -531,7 +561,7 @@ PrefabInstance:
     - target: {fileID: 3557392604469705183, guid: ddc320993bb9a744a8eaa429f86e70ef,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3557392604469705183, guid: ddc320993bb9a744a8eaa429f86e70ef,
         type: 3}
@@ -714,7 +744,6 @@ GameObject:
   - component: {fileID: 1816674951}
   - component: {fileID: 1816674950}
   - component: {fileID: 1816674954}
-  - component: {fileID: 1816674953}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -787,25 +816,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1816674953
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1816674949}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5a1eaf78bb088304c8b243b1cd41799d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1816674954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -939,7 +949,7 @@ PrefabInstance:
     - target: {fileID: 3557392604469705183, guid: ddc320993bb9a744a8eaa429f86e70ef,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3557392604469705183, guid: ddc320993bb9a744a8eaa429f86e70ef,
         type: 3}
