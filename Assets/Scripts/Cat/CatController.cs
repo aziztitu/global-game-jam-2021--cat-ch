@@ -31,18 +31,32 @@ public class CatController : MonoBehaviour
     public List<AudioClip> meowClips = new List<AudioClip>();
     private AudioSource audioSource;
 
+    public GameObject tempPlayer;
+
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
         nav = GetComponent<NavMeshAgent>();
 
         currentMeowBuffer = maxMeowTimer.GetRandom();
+    }
+
+    private void Start()
+    {
         FindNewHidingSpot();
     }
 
     public void FindNewHidingSpot()
     {
-        potentialHidingSpot = CatManager.Instance.FindOpenLocation();
+        if (currentHidingSpot == null)
+        {
+            potentialHidingSpot = CatManager.Instance.FindOpenLocation();
+        }
+        else
+        {
+            potentialHidingSpot = CatManager.Instance.FindOpenLocation(tempPlayer.transform.position, transform.position);
+        }
+        
         nav.SetDestination(potentialHidingSpot.position);
 
         transform.rotation = Quaternion.LookRotation(new Vector3(potentialHidingSpot.position.x, 0, potentialHidingSpot.position.z) - new Vector3(transform.position.x, 0, transform.position.z), Vector3.up);

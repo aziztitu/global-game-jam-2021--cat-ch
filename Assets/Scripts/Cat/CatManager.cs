@@ -5,6 +5,9 @@ using UnityEngine;
 public class CatManager : SingletonMonoBehaviour<CatManager>
 {
     public List<Transform> hidingSpots = new List<Transform>();
+    
+    [Range(0,360)]
+    public float angleOfPlayerDistance = 0;
 
     new void Awake()
     {
@@ -14,24 +17,36 @@ public class CatManager : SingletonMonoBehaviour<CatManager>
     public Transform FindOpenLocation()
     {
         int randNumb = Random.Range(0, hidingSpots.Count);
-
         return hidingSpots[randNumb];
     }
 
-    public Transform FindOpenLocation(Vector3 playerPos)
+    public Transform FindOpenLocation(Vector3 playerPos, Vector3 catPos)
     {
-        float max = Mathf.Abs(Vector3.Distance(hidingSpots[0].position, playerPos));
-        int maxIndex = 0;
-        for (int i = 1; i < hidingSpots.Count; i++)
+        List<Transform> tempHideSpots = new List<Transform>();
+        for (int i = 0; i < hidingSpots.Count; i++)
         {
-            if (Mathf.Abs(Vector3.Distance(hidingSpots[i].position, playerPos)) > max)
+            Vector3 tempHideSpot = hidingSpots[i].position, tempPlayerPos = playerPos, tempCatPos = catPos;
+            tempHideSpot.y = 0;
+            tempPlayerPos.y = 0;
+            tempCatPos.y = 0;
+
+            if (Mathf.Abs(Vector3.Angle((tempHideSpot - tempCatPos).normalized, (tempPlayerPos - tempCatPos).normalized)) > angleOfPlayerDistance)
             {
-                max = Mathf.Abs(Vector3.Distance(hidingSpots[i].position, playerPos));
-                maxIndex = i;
+                Debug.Log(Mathf.Abs(Vector3.Angle((tempHideSpot - tempCatPos).normalized, (tempPlayerPos - tempCatPos).normalized)));
+                tempHideSpots.Add(hidingSpots[i]);
             }
         }
 
-        return hidingSpots[maxIndex];
+        if (tempHideSpots.Count > 0)
+        {
+            int randNumb = Random.Range(0, tempHideSpots.Count);
+            return tempHideSpots[randNumb];
+        }
+        else
+        {
+            int randNumb = Random.Range(0, hidingSpots.Count);
+            return hidingSpots[randNumb];
+        }
     }
 
     public bool IsLocationOpen(Transform hidingSpot)
