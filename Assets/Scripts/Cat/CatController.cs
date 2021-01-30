@@ -38,6 +38,38 @@ public class CatController : MonoBehaviour
         }
     }
 
+    public void ChooseNewLocation(Vector3 playerPos)
+    {
+        Transform oldHidingSpot = null;
+        if (currentHidingSpot != null)
+        {
+            oldHidingSpot = currentHidingSpot;
+        }
+
+        float max = Mathf.Abs(Vector3.Distance(hidingSpots[0].position, playerPos));
+        int maxIndex = -1;
+        for (int i = 1; i < hidingSpots.Count; i++)
+        {
+             if (Mathf.Abs(Vector3.Distance(hidingSpots[i].position, playerPos)) > max)
+             {
+                max = Mathf.Abs(Vector3.Distance(hidingSpots[i].position, playerPos));
+                maxIndex = i;
+             }
+        }
+
+        if (maxIndex != -1)
+        {
+            transform.position = hidingSpots[maxIndex].position;
+            currentHidingSpot = hidingSpots[maxIndex];
+            hidingSpots.Remove(hidingSpots[maxIndex]);
+        }
+
+        if (oldHidingSpot != null)
+        {
+            hidingSpots.Add(oldHidingSpot);
+        }
+    }
+
     void CountDownMeow()
     {
         currentMeowBuffer -= Time.deltaTime;
@@ -53,7 +85,6 @@ public class CatController : MonoBehaviour
     {
         audioSource.clip = meowClips[Random.Range(0, meowClips.Count)];
         audioSource.Play();
-        Debug.Log("Yij");
     }
 
     private void Update()
