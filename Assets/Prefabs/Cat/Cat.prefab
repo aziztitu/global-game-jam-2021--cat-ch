@@ -234,6 +234,9 @@ MonoBehaviour:
   maxMeowTimer:
     min: 4.5
     max: 6
+  maxChangeLocationTimer:
+    min: 30
+    max: 60
   meowClips:
   - {fileID: 8300000, guid: 290e3e2c208de5f49b9df2f71b602254, type: 3}
   - {fileID: 8300000, guid: 38ac318a41aaf9944b73f45ff7a73428, type: 3}
@@ -242,4 +245,3 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a35274df4807cb04f9477b28722f5a5d, type: 3}
   - {fileID: 8300000, guid: 16c8700f296e11e4c973f6821685bb94, type: 3}
   - {fileID: 8300000, guid: 35f431c5d1ebaef4a8ce70b907c1cfea, type: 3}
-  tempPlayer: {fileID: 0}

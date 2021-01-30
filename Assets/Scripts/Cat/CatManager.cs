@@ -97,7 +97,5 @@ public class CatManager : SingletonMonoBehaviour<CatManager>
         {
             SpawnCat();
         }
-
-        Debug.Log(hidingSpots.Count);
     }
 }

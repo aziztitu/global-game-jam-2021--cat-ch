@@ -16,7 +16,6 @@ public class CatController : MonoBehaviour
     [Tooltip("Should be greater than hidingDistance.")]
     [Range(1.5f,2)]
     public float inspectingDistance = 0;
-    private bool isHiding = false;
 
     public enum CatState
     {
@@ -26,12 +25,16 @@ public class CatController : MonoBehaviour
 
     public CatState catState = CatState.Hiding;
 
+    [Header("Timers")]
     public RangeFloat maxMeowTimer = new RangeFloat(0, 0);
     private float currentMeowBuffer = 0;
+
+    public RangeFloat maxChangeLocationTimer = new RangeFloat(0, 0);
+    private float currentChangeLocationBuffer = 0;
+
+    [Header("Meows")]
     public List<AudioClip> meowClips = new List<AudioClip>();
     private AudioSource audioSource;
-
-    public GameObject tempPlayer;
 
     private void Awake()
     {
@@ -39,6 +42,7 @@ public class CatController : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();
 
         currentMeowBuffer = maxMeowTimer.GetRandom();
+        currentChangeLocationBuffer = maxChangeLocationTimer.GetRandom();
     }
 
     private void OnEnable()
@@ -107,6 +111,22 @@ public class CatController : MonoBehaviour
         audioSource.Play();
     }
 
+    void CountDownRoam()
+    {
+        if (catState != CatState.Hiding)
+        {
+            return;
+        }
+
+        currentChangeLocationBuffer -= Time.deltaTime;
+
+        if(currentChangeLocationBuffer <= 0)
+        {
+            ChangeState(CatState.Running);
+            currentChangeLocationBuffer = maxChangeLocationTimer.GetRandom();
+        }
+    }
+
     public void ChangeState(CatState state)
     {
         if (catState != state)
@@ -151,13 +171,9 @@ public class CatController : MonoBehaviour
     private void Update()
     {
         CountDownMeow();
-
+        CountDownRoam();
+        
         CatStateUpdates();
-
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            ChangeState(CatState.Running);
-        }
 
         if (Input.GetKeyDown(KeyCode.D))
         {
