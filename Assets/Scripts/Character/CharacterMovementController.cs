@@ -327,8 +327,8 @@ public class CharacterMovementController : MonoBehaviour
             animVector.Normalize();
         }
 
-        UpdateMoveAnimation(animVector.y, animVector.x,
-            m_CharacterController.isGrounded, !m_IsWalking);
+        /*UpdateMoveAnimation(animVector.y, animVector.x,
+            m_CharacterController.isGrounded, !m_IsWalking);*/
     }
 
     void UpdateMoveAnimation(float forward, float right, bool isGrounded, bool isSprinting)
@@ -363,11 +363,20 @@ public class CharacterMovementController : MonoBehaviour
             desiredMove.Normalize();
         }
 
-        bool justDodged = !isDodging && timeSinceDodgeStart >= dodgeDuration &&
-                          timeSinceDodgeStart < dodgeDuration * 8;
-        if (desiredMove.magnitude > 0 || justDodged)
+        if (desiredMove.magnitude > 0)
         {
-            // TurnTowardsLockedTarget();
+            //            Vector3 lookAtTarget = transform.position +
+            //                                   (thirdPersonCamera.virtualCamera.transform.forward * 5);
+            Vector3 lookAtTarget = transform.position + (desiredMove * 5);
+            lookAtTarget.y = transform.position.y;
+
+            Vector3 targetForward = lookAtTarget - transform.position;
+            targetForward.Normalize();
+
+            //            transform.forward = Vector3.Lerp(transform.forward, targetForward, turnSpeed * Time.fixedDeltaTime);
+
+            var targetRot = Quaternion.LookRotation(targetForward);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, turnSpeed * Time.fixedDeltaTime);
         }
 
         m_MoveDir.x = desiredMove.x * speed;

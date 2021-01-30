@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public class CharacterModel : MonoBehaviour
 {
+    [Serializable]
     public class CharacterInput
     {
         public Vector3 Move;
@@ -20,6 +21,7 @@ public class CharacterModel : MonoBehaviour
         //        public bool Sprint;
     }
 
+    [ReadOnly]
     public CharacterInput characterInput = new CharacterInput();
 
     public CharacterMovementController characterMovementController { get; private set; }
@@ -120,12 +122,9 @@ public class CharacterModel : MonoBehaviour
         }
         */
 
-        var toTarget = lockedOnTargetPos - transform.position;
-        toTarget.y = 0;
-
         // playerTarget.localRotation = Quaternion.Slerp(playerTarget.localRotation, Quaternion.LookRotation(toTarget, Vector3.up), Time.deltaTime);
 
-        var targetLookAt = lockedOnTargetPos;
+        /*var targetLookAt = lockedOnTargetPos;
         targetLookAt.y = 0;
 
         var originalRot = playerTarget.localRotation;
@@ -137,6 +136,7 @@ public class CharacterModel : MonoBehaviour
         var targetRotation = Quaternion.Euler(newAngles);
 
         playerTarget.localRotation = Quaternion.Slerp(originalRot, targetRotation, playerTargetRotationSpeed * Time.deltaTime);
+        */
 
         animator.SetBool("IsAlive", isAlive);
     }
