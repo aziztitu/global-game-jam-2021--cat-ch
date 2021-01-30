@@ -355,6 +355,9 @@ MonoBehaviour:
   - {fileID: 1109201185}
   - {fileID: 986705239}
   - {fileID: 1546843739}
+  maxMeowTimer:
+    min: 4.5
+    max: 6
   meowClips:
   - {fileID: 8300000, guid: 290e3e2c208de5f49b9df2f71b602254, type: 3}
   - {fileID: 8300000, guid: 38ac318a41aaf9944b73f45ff7a73428, type: 3}
