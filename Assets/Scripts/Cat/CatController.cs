@@ -1,72 +1,77 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CatController : MonoBehaviour
 {
-    public List<Transform> hidingSpots = new List<Transform>();
+    private NavMeshAgent nav;
+
     private Transform currentHidingSpot = null;
+    private Transform potentialHidingSpot = null;
+
+    [Range(0,1)]
+    public float hidingDistance = 0;
+    private bool isHiding = false;
+
+    public enum CatState
+    {
+        Hiding,
+        Running
+    }
+
+    public CatState catState = CatState.Running;
 
     public RangeFloat maxMeowTimer = new RangeFloat(0, 0);
     private float currentMeowBuffer = 0;
     public List<AudioClip> meowClips = new List<AudioClip>();
     private AudioSource audioSource;
 
-    public GameObject playerTest;
-
-
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        nav = GetComponent<NavMeshAgent>();
+
+        FindNewHidingSpot();
     }
 
-    public void ChooseNewLocation()
+    public void FindNewHidingSpot()
     {
-        Transform oldHidingSpot = null;
-        if (currentHidingSpot != null)
-        {
-            oldHidingSpot = currentHidingSpot;
-        }
-
-        int randNumb = Random.Range(0, hidingSpots.Count);
+        potentialHidingSpot = CatManager.Instance.FindOpenLocation();
+        nav.SetDestination(potentialHidingSpot.position);
         
-        transform.position = hidingSpots[randNumb].position;
-        currentHidingSpot = hidingSpots[randNumb];
-        hidingSpots.Remove(hidingSpots[randNumb]);
+        transform.rotation = Quaternion.LookRotation(new Vector3(potentialHidingSpot.position.x, 0, potentialHidingSpot.position.z) - new Vector3(transform.position.x, 0, transform.position.z), Vector3.up);
+    }
 
-        if (oldHidingSpot != null)
+    public void CheckNewHidingSpot()
+    {
+        if (Vector3.Distance(transform.position, potentialHidingSpot.position) > hidingDistance)
         {
-            hidingSpots.Add(oldHidingSpot);
+            if (!CatManager.Instance.IsLocationOpen(potentialHidingSpot))
+            {
+                FindNewHidingSpot();
+            }
+            else
+            {
+                return;
+            }
+        }
+        else
+        {
+            ChangeState(CatState.Hiding);
         }
     }
 
-    public void ChooseNewLocation(Vector3 playerPos)
+    void ChangeCurrentHidingPlace()
     {
-        Transform oldHidingSpot = null;
         if (currentHidingSpot != null)
         {
-            oldHidingSpot = currentHidingSpot;
+            CatManager.Instance.AddCurrentHidingSpot(currentHidingSpot);
         }
-
-        float max = Mathf.Abs(Vector3.Distance(hidingSpots[0].position, playerPos));
-        int maxIndex = 0;
-        for (int i = 1; i < hidingSpots.Count; i++)
-        {
-             if (Mathf.Abs(Vector3.Distance(hidingSpots[i].position, playerPos)) > max)
-             {
-                max = Mathf.Abs(Vector3.Distance(hidingSpots[i].position, playerPos));
-                maxIndex = i;
-             }
-        }
-
-        transform.position = hidingSpots[maxIndex].position;
-        currentHidingSpot = hidingSpots[maxIndex];
-        hidingSpots.Remove(hidingSpots[maxIndex]);
-
-        if (oldHidingSpot != null)
-        {
-            hidingSpots.Add(oldHidingSpot);
-        }
+        currentHidingSpot = potentialHidingSpot;
+        
+        CatManager.Instance.RemoveCurrentHidingSpot(potentialHidingSpot);
+        potentialHidingSpot = null;
     }
 
     void CountDownMeow()
@@ -86,14 +91,49 @@ public class CatController : MonoBehaviour
         audioSource.Play();
     }
 
+    public void ChangeState(CatState state)
+    {
+        if (catState != state)
+        {
+            switch (state)
+            {
+                case CatState.Hiding:
+                    ChangeCurrentHidingPlace();
+                    
+                    break;
+                case CatState.Running:
+                    FindNewHidingSpot();
+
+                    break;
+            }
+
+            catState = state;
+        }
+        
+    }
+
+    void CatStateUpdates()
+    {
+        switch (catState)
+        {
+            case CatState.Hiding:
+
+                break;
+            case CatState.Running:
+                CheckNewHidingSpot();
+                break;
+        }
+    }
+
     private void Update()
     {
         CountDownMeow();
+
+        CatStateUpdates();
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            ChooseNewLocation(playerTest.transform.position);
+            ChangeState(CatState.Running);
         }
-
-        
     }
 }
