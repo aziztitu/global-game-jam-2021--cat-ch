@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class CatController : MonoBehaviour
 {
-    private NavMeshAgent nav;
+    [HideInInspector] public NavMeshAgent nav;
 
     private Transform currentHidingSpot = null;
     private Transform potentialHidingSpot = null;
@@ -24,7 +24,7 @@ public class CatController : MonoBehaviour
         Running
     }
 
-    public CatState catState = CatState.Running;
+    public CatState catState = CatState.Hiding;
 
     public RangeFloat maxMeowTimer = new RangeFloat(0, 0);
     private float currentMeowBuffer = 0;
@@ -41,9 +41,9 @@ public class CatController : MonoBehaviour
         currentMeowBuffer = maxMeowTimer.GetRandom();
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        FindNewHidingSpot();
+        catState = CatState.Hiding;
     }
 
     public void FindNewHidingSpot()
@@ -54,7 +54,8 @@ public class CatController : MonoBehaviour
         }
         else
         {
-            potentialHidingSpot = CatManager.Instance.FindOpenLocation(tempPlayer.transform.position, transform.position);
+            //potentialHidingSpot = CatManager.Instance.FindOpenLocation(tempPlayer.transform.position, transform.position);
+            potentialHidingSpot = CatManager.Instance.FindOpenLocation();
         }
         
         nav.SetDestination(potentialHidingSpot.position);
@@ -82,6 +83,11 @@ public class CatController : MonoBehaviour
         
         CatManager.Instance.RemoveCurrentHidingSpot(potentialHidingSpot);
         potentialHidingSpot = null;
+    }
+
+    public void SetCurrentHidingSpot(Transform newHidingSpot)
+    {
+        currentHidingSpot = newHidingSpot;
     }
 
     void CountDownMeow()
@@ -148,9 +154,24 @@ public class CatController : MonoBehaviour
 
         CatStateUpdates();
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.H))
         {
             ChangeState(CatState.Running);
+        }
+
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        CatManager.Instance.activeCats.Remove(this);
+
+        if (!CatManager.Instance.hidingSpots.Contains(currentHidingSpot))
+        {
+            CatManager.Instance.AddCurrentHidingSpot(currentHidingSpot);
         }
     }
 }
