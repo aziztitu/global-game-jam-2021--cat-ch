@@ -180,6 +180,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4751904640852782691}
     m_Modifications:
+    - target: {fileID: 686542309499726417, guid: 956649797c327f34a9aeb8eacbb1001e,
+        type: 3}
+      propertyPath: m_CollideAgainst.m_Bits
+      value: 257
+      objectReference: {fileID: 0}
     - target: {fileID: 899950297821261345, guid: 956649797c327f34a9aeb8eacbb1001e,
         type: 3}
       propertyPath: targetObject
