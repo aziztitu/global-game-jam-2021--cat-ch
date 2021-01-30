@@ -12,6 +12,10 @@ public class CatController : MonoBehaviour
 
     [Range(0,1)]
     public float hidingDistance = 0;
+    
+    [Tooltip("Should be greater than hidingDistance.")]
+    [Range(1.5f,2)]
+    public float inspectingDistance = 0;
     private bool isHiding = false;
 
     public enum CatState
@@ -32,6 +36,7 @@ public class CatController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         nav = GetComponent<NavMeshAgent>();
 
+        currentMeowBuffer = maxMeowTimer.GetRandom();
         FindNewHidingSpot();
     }
 
@@ -39,24 +44,19 @@ public class CatController : MonoBehaviour
     {
         potentialHidingSpot = CatManager.Instance.FindOpenLocation();
         nav.SetDestination(potentialHidingSpot.position);
-        
+
         transform.rotation = Quaternion.LookRotation(new Vector3(potentialHidingSpot.position.x, 0, potentialHidingSpot.position.z) - new Vector3(transform.position.x, 0, transform.position.z), Vector3.up);
     }
 
     public void CheckNewHidingSpot()
     {
-        if (Vector3.Distance(transform.position, potentialHidingSpot.position) > hidingDistance)
+        if (!CatManager.Instance.IsLocationOpen(potentialHidingSpot))
         {
-            if (!CatManager.Instance.IsLocationOpen(potentialHidingSpot))
-            {
-                FindNewHidingSpot();
-            }
-            else
-            {
-                return;
-            }
+            FindNewHidingSpot();
+            return;
         }
-        else
+
+        if (Vector3.Distance(transform.position, potentialHidingSpot.position) < hidingDistance)
         {
             ChangeState(CatState.Hiding);
         }
@@ -64,10 +64,6 @@ public class CatController : MonoBehaviour
 
     void ChangeCurrentHidingPlace()
     {
-        if (currentHidingSpot != null)
-        {
-            CatManager.Instance.AddCurrentHidingSpot(currentHidingSpot);
-        }
         currentHidingSpot = potentialHidingSpot;
         
         CatManager.Instance.RemoveCurrentHidingSpot(potentialHidingSpot);
@@ -104,6 +100,10 @@ public class CatController : MonoBehaviour
                 case CatState.Running:
                     FindNewHidingSpot();
 
+                    if (currentHidingSpot != null)
+                    {
+                        CatManager.Instance.AddCurrentHidingSpot(currentHidingSpot);
+                    }
                     break;
             }
 
@@ -120,7 +120,10 @@ public class CatController : MonoBehaviour
 
                 break;
             case CatState.Running:
-                CheckNewHidingSpot();
+                if (Vector3.Distance(transform.position, potentialHidingSpot.position) < inspectingDistance)
+                {
+                    CheckNewHidingSpot();
+                }
                 break;
         }
     }
