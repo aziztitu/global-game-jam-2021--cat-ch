@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class CatManager : SingletonMonoBehaviour<CatManager>
 {
+    [Header("Hiding Spots")]
     public List<Transform> hidingSpots = new List<Transform>();
+    [Header("Cat Spawning")]
+    public List<GameObject> catPrefabsToSpawn = new List<GameObject>();
+
+    [HideInInspector] public List<CatController> activeCats = new List<CatController>();
     
     [Range(0,360)]
     public float angleOfPlayerDistance = 0;
@@ -12,6 +17,28 @@ public class CatManager : SingletonMonoBehaviour<CatManager>
     new void Awake()
     {
         base.Awake();
+    }
+
+    public void SpawnCat()
+    {
+        if (hidingSpots.Count <= 1)
+        {
+            return;
+        }
+
+        int randNumb = Random.Range(0, catPrefabsToSpawn.Count);
+
+        GameObject cat = Instantiate(catPrefabsToSpawn[randNumb], this.transform);
+        Transform spawnedLocation = FindOpenLocation();
+
+        cat.GetComponent<CatController>().nav.enabled = false;
+        cat.transform.position = spawnedLocation.position;
+        cat.GetComponent<CatController>().nav.enabled = true;
+
+        activeCats.Add(cat.GetComponent<CatController>());
+
+        cat.GetComponent<CatController>().SetCurrentHidingSpot(spawnedLocation);
+        hidingSpots.Remove(spawnedLocation);
     }
 
     public Transform FindOpenLocation()
@@ -62,5 +89,13 @@ public class CatManager : SingletonMonoBehaviour<CatManager>
     public void AddCurrentHidingSpot(Transform catHidingSpot)
     {
         hidingSpots.Add(catHidingSpot);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SpawnCat();
+        }
     }
 }

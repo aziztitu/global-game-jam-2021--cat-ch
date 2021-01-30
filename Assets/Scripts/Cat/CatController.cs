@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class CatController : MonoBehaviour
 {
-    private NavMeshAgent nav;
+    [HideInInspector] public NavMeshAgent nav;
 
     private Transform currentHidingSpot = null;
     private Transform potentialHidingSpot = null;
@@ -16,7 +16,6 @@ public class CatController : MonoBehaviour
     [Tooltip("Should be greater than hidingDistance.")]
     [Range(1.5f,2)]
     public float inspectingDistance = 0;
-    private bool isHiding = false;
 
     public enum CatState
     {
@@ -24,14 +23,18 @@ public class CatController : MonoBehaviour
         Running
     }
 
-    public CatState catState = CatState.Running;
+    public CatState catState = CatState.Hiding;
 
+    [Header("Timers")]
     public RangeFloat maxMeowTimer = new RangeFloat(0, 0);
     private float currentMeowBuffer = 0;
+
+    public RangeFloat maxChangeLocationTimer = new RangeFloat(0, 0);
+    private float currentChangeLocationBuffer = 0;
+
+    [Header("Meows")]
     public List<AudioClip> meowClips = new List<AudioClip>();
     private AudioSource audioSource;
-
-    public GameObject tempPlayer;
 
     private void Awake()
     {
@@ -39,11 +42,12 @@ public class CatController : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();
 
         currentMeowBuffer = maxMeowTimer.GetRandom();
+        currentChangeLocationBuffer = maxChangeLocationTimer.GetRandom();
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        FindNewHidingSpot();
+        catState = CatState.Hiding;
     }
 
     public void FindNewHidingSpot()
@@ -54,7 +58,8 @@ public class CatController : MonoBehaviour
         }
         else
         {
-            potentialHidingSpot = CatManager.Instance.FindOpenLocation(tempPlayer.transform.position, transform.position);
+            //potentialHidingSpot = CatManager.Instance.FindOpenLocation(tempPlayer.transform.position, transform.position);
+            potentialHidingSpot = CatManager.Instance.FindOpenLocation();
         }
         
         nav.SetDestination(potentialHidingSpot.position);
@@ -84,6 +89,11 @@ public class CatController : MonoBehaviour
         potentialHidingSpot = null;
     }
 
+    public void SetCurrentHidingSpot(Transform newHidingSpot)
+    {
+        currentHidingSpot = newHidingSpot;
+    }
+
     void CountDownMeow()
     {
         currentMeowBuffer -= Time.deltaTime;
@@ -99,6 +109,22 @@ public class CatController : MonoBehaviour
     {
         audioSource.clip = meowClips[Random.Range(0, meowClips.Count)];
         audioSource.Play();
+    }
+
+    void CountDownRoam()
+    {
+        if (catState != CatState.Hiding)
+        {
+            return;
+        }
+
+        currentChangeLocationBuffer -= Time.deltaTime;
+
+        if(currentChangeLocationBuffer <= 0)
+        {
+            ChangeState(CatState.Running);
+            currentChangeLocationBuffer = maxChangeLocationTimer.GetRandom();
+        }
     }
 
     public void ChangeState(CatState state)
@@ -145,12 +171,23 @@ public class CatController : MonoBehaviour
     private void Update()
     {
         CountDownMeow();
-
+        CountDownRoam();
+        
         CatStateUpdates();
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.D))
         {
-            ChangeState(CatState.Running);
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        CatManager.Instance.activeCats.Remove(this);
+
+        if (!CatManager.Instance.hidingSpots.Contains(currentHidingSpot))
+        {
+            CatManager.Instance.AddCurrentHidingSpot(currentHidingSpot);
         }
     }
 }
