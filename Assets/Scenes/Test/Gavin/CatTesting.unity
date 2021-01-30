@@ -120,7 +120,7 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 77948d6af54c5a940a0c83785007ee34, type: 2}
 --- !u!1 &666930235
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,7 +496,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!64 &1634364167
 MeshCollider:
@@ -729,5 +729,10 @@ PrefabInstance:
       propertyPath: playerTest
       value: 
       objectReference: {fileID: 1276941287}
+    - target: {fileID: 3070931843228665823, guid: 0f4139eeead689e46acfa8d4b017be53,
+        type: 3}
+      propertyPath: hidingDistance
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f4139eeead689e46acfa8d4b017be53, type: 3}

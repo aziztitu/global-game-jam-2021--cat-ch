@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3070931843228665810}
   - component: {fileID: 3070931843228665811}
   - component: {fileID: 3070931843228665822}
+  - component: {fileID: 8957704553667741806}
   - component: {fileID: 3070931843228665823}
   m_Layer: 0
   m_Name: Cat
@@ -192,6 +193,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!195 &8957704553667741806
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3070931843228665812}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &3070931843228665823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,6 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 151b22b1ed5c99e45b5b4aa3ca861483, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hidingDistance: 0
   maxMeowTimer:
     min: 4.5
     max: 6
@@ -215,4 +239,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a35274df4807cb04f9477b28722f5a5d, type: 3}
   - {fileID: 8300000, guid: 16c8700f296e11e4c973f6821685bb94, type: 3}
   - {fileID: 8300000, guid: 35f431c5d1ebaef4a8ce70b907c1cfea, type: 3}
-  playerTest: {fileID: 0}
+  catState: 1

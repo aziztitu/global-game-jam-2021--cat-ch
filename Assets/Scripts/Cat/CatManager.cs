@@ -43,4 +43,9 @@ public class CatManager : SingletonMonoBehaviour<CatManager>
     {
         hidingSpots.Remove(catHidingSpot);
     }
+
+    public void AddCurrentHidingSpot(Transform catHidingSpot)
+    {
+        hidingSpots.Add(catHidingSpot);
+    }
 }
