@@ -10,9 +10,11 @@ public class PauseScreenManager : MonoBehaviour
     public RectTransform optionPanel;
 
     public int offset = 100;
+    public int optionOffset = 400;
     public float smooth = 0.25f;
 
     public static bool gameIsPaused = false;
+    public static bool optionsOn = false;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +35,7 @@ public class PauseScreenManager : MonoBehaviour
     {
         Debug.Log("pause");
         menuPanel.DOKill(true);
+
         if (gameIsPaused)
         {
             Debug.Log("moveright");
@@ -42,11 +45,17 @@ public class PauseScreenManager : MonoBehaviour
         else
         {
             Debug.Log("moveleft");
-            if (DOTween.TotalPlayingTweens() == 0)
+            
+            if(DOTween.TotalPlayingTweens() == 0)
             {
                 menuPanel.DOAnchorPos(new Vector2(menuPanel.localPosition.x - offset, 0), smooth).SetUpdate(true);
             }
             Time.timeScale = 1;
+        }
+
+        if (optionsOn)
+        {
+            optionsButtonTweenBack();
         }
     }
 
@@ -57,8 +66,24 @@ public class PauseScreenManager : MonoBehaviour
         if (DOTween.TotalPlayingTweens() == 0)
         {
             menuPanel.DOAnchorPos(new Vector2(menuPanel.localPosition.x - offset, 0), smooth).SetUpdate(true);
+            optionsButtonTweenBack();
             gameIsPaused = !gameIsPaused;
         }
+    }
+
+    public void optionsButtonTween()
+    {
+        if(!optionsOn)
+        {
+            optionPanel.DOAnchorPos(new Vector2(optionPanel.localPosition.x, optionPanel.localPosition.y + optionOffset), smooth).SetUpdate(true);
+            optionsOn = !optionsOn;
+        }
+    }
+
+    public void optionsButtonTweenBack()
+    {
+        optionPanel.DOAnchorPos(new Vector2(optionPanel.localPosition.x, optionPanel.localPosition.y - optionOffset), smooth).SetUpdate(true);
+        optionsOn = !optionsOn;
     }
 
     public void quitButton()
