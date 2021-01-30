@@ -12,6 +12,8 @@ public class CatController : MonoBehaviour
     public List<AudioClip> meowClips = new List<AudioClip>();
     private AudioSource audioSource;
 
+    public GameObject playerTest;
+
 
     private void Awake()
     {
@@ -47,7 +49,7 @@ public class CatController : MonoBehaviour
         }
 
         float max = Mathf.Abs(Vector3.Distance(hidingSpots[0].position, playerPos));
-        int maxIndex = -1;
+        int maxIndex = 0;
         for (int i = 1; i < hidingSpots.Count; i++)
         {
              if (Mathf.Abs(Vector3.Distance(hidingSpots[i].position, playerPos)) > max)
@@ -57,12 +59,9 @@ public class CatController : MonoBehaviour
              }
         }
 
-        if (maxIndex != -1)
-        {
-            transform.position = hidingSpots[maxIndex].position;
-            currentHidingSpot = hidingSpots[maxIndex];
-            hidingSpots.Remove(hidingSpots[maxIndex]);
-        }
+        transform.position = hidingSpots[maxIndex].position;
+        currentHidingSpot = hidingSpots[maxIndex];
+        hidingSpots.Remove(hidingSpots[maxIndex]);
 
         if (oldHidingSpot != null)
         {
@@ -92,7 +91,7 @@ public class CatController : MonoBehaviour
         CountDownMeow();
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            ChooseNewLocation();
+            ChooseNewLocation(playerTest.transform.position);
         }
 
         
