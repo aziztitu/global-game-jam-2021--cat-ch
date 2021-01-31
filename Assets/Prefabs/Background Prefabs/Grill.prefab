@@ -93,11 +93,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1854089325052031346, guid: c27f6380ba267af49b91fb7048787347,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: aa99cca7947f558408f6849bfb5e5b1d, type: 2}
     - target: {fileID: 919132149155446097, guid: c27f6380ba267af49b91fb7048787347,
         type: 3}
       propertyPath: m_Name
       value: Grill
       objectReference: {fileID: 0}
+    - target: {fileID: 4812782067586951086, guid: c27f6380ba267af49b91fb7048787347,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 835ea136e3d3a8f4582fe1d431befaa8, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c27f6380ba267af49b91fb7048787347, type: 3}
 --- !u!4 &8991297390568572927 stripped
