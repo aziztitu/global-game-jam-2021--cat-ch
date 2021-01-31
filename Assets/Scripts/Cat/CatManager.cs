@@ -21,6 +21,7 @@ public class CatManager : SingletonMonoBehaviour<CatManager>
     [Header("Cat Avoidance")]
     [Range(0,360)]
     public float angleOfPlayerDistance = 0;
+    public float playerAvoidanceRadius = 0;
 
     [Header("Cat Caller")]
     public RangeFloat maxMeowTimer = new RangeFloat(0, 0);
@@ -72,6 +73,7 @@ public class CatManager : SingletonMonoBehaviour<CatManager>
     public Transform FindOpenLocation(Vector3 playerPos, Vector3 catPos)
     {
         List<Transform> tempHideSpots = new List<Transform>();
+        List<Transform> finalTempHideSpots = new List<Transform>();
         for (int i = 0; i < hidingSpots.Count; i++)
         {
             Vector3 tempHideSpot = hidingSpots[i].position, tempPlayerPos = playerPos, tempCatPos = catPos;
@@ -85,10 +87,23 @@ public class CatManager : SingletonMonoBehaviour<CatManager>
             }
         }
 
-        if (tempHideSpots.Count > 0)
+        for (int i = 0; i < tempHideSpots.Count; i++)
         {
-            int randNumb = Random.Range(0, tempHideSpots.Count);
-            return tempHideSpots[randNumb];
+            Vector3 tempHideSpot = hidingSpots[i].position, tempPlayerPos = playerPos, tempCatPos = catPos;
+            tempHideSpot.y = 0;
+            tempPlayerPos.y = 0;
+            tempCatPos.y = 0;
+
+            if (Vector3.Distance(tempHideSpots[i].position, playerPos) > angleOfPlayerDistance)
+            {
+                finalTempHideSpots.Add(tempHideSpots[i]);
+            }
+        }
+
+        if (finalTempHideSpots.Count > 0)
+        {
+            int randNumb = Random.Range(0, finalTempHideSpots.Count);
+            return finalTempHideSpots[randNumb];
         }
         else
         {

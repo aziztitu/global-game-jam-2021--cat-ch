@@ -84,15 +84,15 @@ public class HUDScreenManager : MonoBehaviour
     public void resumeButton()
     {
         Debug.Log("moveleft");
-        menuPanel.DOKill(true);
-        if (DOTween.TotalPlayingTweens() == 0)
+        gameIsPaused = !gameIsPaused;
+
+        PauseGame();
+
+        /*if (DOTween.TotalPlayingTweens() == 0)
         {
             menuPanel.DOAnchorPos(startMenu, smooth).SetUpdate(true);
             optionsButtonTweenBack();
-            gameIsPaused = !gameIsPaused;
-
-            //PauseGame();
-        }
+        }*/
     }
 
     public void optionsButtonTween()

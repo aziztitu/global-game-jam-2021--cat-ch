@@ -16,6 +16,8 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
 
     public LevelSettings settings;
 
+    public HUDScreenManager hudScreenManager;
+
     public List<Transform> playerSpawnPoints;
 
     public Randomizer<Transform> playerSpawnRandomizer;
