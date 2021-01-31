@@ -45,7 +45,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _btnSpawnShield: 0
   catPrefabsToSpawn:
-  - {fileID: 3070931843228665812, guid: 0f4139eeead689e46acfa8d4b017be53, type: 3}
+  - {fileID: 4703298839520972559, guid: 80d469fcfada9f64394c0ee0d8d23e58, type: 3}
+  - {fileID: 7332160301040305773, guid: 8b9262ffbbd06de4ba7f9a1298439755, type: 3}
+  - {fileID: 2032333506089023215, guid: 5eaed714283c431409d90a2ade63f4dd, type: 3}
+  - {fileID: 5680944264070280743, guid: dbe164ae1913fcc49ae0bfb632a8efdf, type: 3}
+  - {fileID: 3814018141798118112, guid: d411b6e3f574284478e86c086a7d82b6, type: 3}
+  - {fileID: 3218135421686394222, guid: f3f08e93648f45c42af48295be11077a, type: 3}
+  - {fileID: 2438063097120548809, guid: ba75a1ca3a38e744e99fd94e357a8595, type: 3}
+  - {fileID: 644502293606704603, guid: e422814f814359d4ca6baeafbe48bce3, type: 3}
+  - {fileID: 7295605731536082472, guid: 91f76657c682582499c282fd31f86f5e, type: 3}
   activeCats: []
   hidingSpots:
   - {fileID: 0}
