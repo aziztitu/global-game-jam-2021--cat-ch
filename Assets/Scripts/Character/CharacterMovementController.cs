@@ -64,7 +64,7 @@ public class CharacterMovementController : MonoBehaviour
 
     public bool canMove => characterModel.isAlive && !characterModel.characterAnimEventHandler.isInDivingState &&
                            !characterModel.characterAnimEventHandler.isInFallingState &&
-                           !characterModel.characterAnimEventHandler.isInGettingUpState;
+                           !characterModel.characterAnimEventHandler.isInGettingUpState && Time.timeScale > 0.1f;
 
     private class GizmosData
     {
@@ -330,7 +330,7 @@ public class CharacterMovementController : MonoBehaviour
         UpdateMoveAnimation(curSpeedFactor, m_CharacterController.isGrounded, !m_IsWalking);
 
         UpdateFootstepVolume(HelperUtilities.Remap(curSpeed, 0, m_IsWalking ? m_WalkSpeed : m_RunSpeed, 0, 1) *
-            characterModel.characterInput.Move.magnitude * characterModel.footstepMaxVolume);
+                             characterModel.characterInput.Move.magnitude * characterModel.footstepMaxVolume);
     }
 
     void UpdateMoveAnimation(float forward, bool isGrounded, bool isSprinting)

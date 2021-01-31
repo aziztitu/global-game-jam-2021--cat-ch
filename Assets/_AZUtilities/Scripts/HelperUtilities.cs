@@ -88,6 +88,8 @@ public class SimpleTimer
     public bool expired => elapsedTime >= durationRange.selected;
     public float timeSinceExpiry => _elapsedTime - durationRange.selected;
 
+    public float elapsedTimeClamped => expired ? durationRange.selected : elapsedTime;
+
     public SimpleTimer(float duration = 3)
     {
         durationRange = new RangeFloat(duration, duration);
@@ -279,7 +281,8 @@ public class HelperUtilities
         //Change the gizmo matrix to the relative space of the boxCollider.
         //This makes offsets with rotation work
         //Source: https://forum.unity.com/threads/gizmo-rotation.4817/#post-3242447
-        Gizmos.matrix = Matrix4x4.TRS(collider.transform.TransformPoint(collider.center), collider.transform.rotation, collider.transform.lossyScale);
+        Gizmos.matrix = Matrix4x4.TRS(collider.transform.TransformPoint(collider.center), collider.transform.rotation,
+            collider.transform.lossyScale);
 
         //Draws the edges of the BoxCollider
         //Center is Vector3.zero, since we've transformed the calculation space in the previous step.
@@ -291,12 +294,14 @@ public class HelperUtilities
         Gizmos.DrawCube(Vector3.zero, collider.size);
     }
 
-    public static void DrawGizmosForRelativeBounds(Bounds bounds, Transform transform, Color borderColor, Color fillColor)
+    public static void DrawGizmosForRelativeBounds(Bounds bounds, Transform transform, Color borderColor,
+        Color fillColor)
     {
         //Change the gizmo matrix to the relative space of the boxCollider.
         //This makes offsets with rotation work
         //Source: https://forum.unity.com/threads/gizmo-rotation.4817/#post-3242447
-        Gizmos.matrix = Matrix4x4.TRS(transform.TransformPoint(bounds.center), transform.rotation, transform.lossyScale);
+        Gizmos.matrix =
+            Matrix4x4.TRS(transform.TransformPoint(bounds.center), transform.rotation, transform.lossyScale);
 
         //Draws the edges of the BoxCollider
         //Center is Vector3.zero, since we've transformed the calculation space in the previous step.

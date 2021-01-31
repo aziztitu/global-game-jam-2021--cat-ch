@@ -66,12 +66,12 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Controller Controls:
 
-    L.Joystick move
+    L.Joystick move.
 
-    R.Joystick camera
+    R.Joystick camera.
 
     "A"
-    to grab a cat'
+    to Dive/Catch a cat.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6b69df7c5d387c44c8093fda2dfa0773, type: 2}
   m_sharedMaterial: {fileID: -2569238972971359969, guid: 6b69df7c5d387c44c8093fda2dfa0773,
@@ -99,8 +99,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
-  m_fontSizeBase: 28
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -240,7 +240,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -374,7 +374,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -475,12 +475,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Keyboard Controls:
 
-    WASD to move
+    WASD to move.
 
-    Space/LMB to jump
-
-    "" to
-    grab a cat'
+    Space/LMB to Dive/Catch a cat.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6b69df7c5d387c44c8093fda2dfa0773, type: 2}
   m_sharedMaterial: {fileID: -2569238972971359969, guid: 6b69df7c5d387c44c8093fda2dfa0773,
@@ -508,8 +505,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
-  m_fontSizeBase: 28
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -688,7 +685,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0

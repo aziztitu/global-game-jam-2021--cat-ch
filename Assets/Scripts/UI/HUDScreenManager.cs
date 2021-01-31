@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 
-public class HUDScreenManager : MonoBehaviour
+public class HUDScreenManager : SingletonMonoBehaviour<HUDScreenManager>
 {
     public RectTransform menuPanel;
     public RectTransform optionPanel;
@@ -14,13 +14,18 @@ public class HUDScreenManager : MonoBehaviour
     public GameObject endS;
     public Text text;
     public TextMeshProUGUI betterText;
+    public TextMeshProUGUI titleText;
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI catsText;
+    public TextMeshProUGUI scoreText;
+    public GameObject popcat;
 
     public int offset = 300;
     public int optionOffset = 400;
     public float smooth = 0.25f;
     public float delay = 6;
+
+    public float endscreenDelay = 6;
 
     public static bool gameIsPaused = false;
     public static bool optionsOn = false;
@@ -43,10 +48,12 @@ public class HUDScreenManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            gameIsPaused = !gameIsPaused;
-            PauseGame();
+            if (gameIsPaused || !CharacterModel.Instance.characterAnimEventHandler.isInDivingState)
+            {
+                gameIsPaused = !gameIsPaused;
+                PauseGame();
+            }
         }
-
         
         betterText.text = text.text;
     }
@@ -66,11 +73,12 @@ public class HUDScreenManager : MonoBehaviour
         else
         {
             Debug.Log("moveleft");
-            
-            if(DOTween.TotalPlayingTweens() == 0)
+
+            if (DOTween.TotalPlayingTweens() == 0)
             {
                 menuPanel.DOAnchorPos(startMenu, smooth).SetUpdate(true);
             }
+
             Time.timeScale = 1;
             HelperUtilities.UpdateCursorLock(true);
         }
@@ -97,7 +105,7 @@ public class HUDScreenManager : MonoBehaviour
 
     public void optionsButtonTween()
     {
-        if(!optionsOn)
+        if (!optionsOn)
         {
             optionPanel.DOAnchorPos(startOptionOffset, smooth).SetUpdate(true);
             optionsOn = !optionsOn;
@@ -110,22 +118,44 @@ public class HUDScreenManager : MonoBehaviour
         optionsOn = !optionsOn;
     }
 
+    public void restart()
+    {
+        GameManager.Instance.RestartCurrentScene();
+    }
+
     public void toMain()
     {
-
+        GameManager.Instance.GoToMainMenu();
     }
 
     public void quitButton()
     {
-        Application.Quit();
+        GameManager.Instance.QuitGame();
     }
 
     //hook up the values here
-    public void enableEndscreen()
+    public void enableEndscreen(string title)
     {
+        popcat.SetActive(true);
+        titleText.text = title;
+    }
+
+    public void showEndStats()
+    {
+        Time.timeScale = 0f;
+        HelperUtilities.UpdateCursorLock(false);
+
         endS.SetActive(true);
-        text.DOText("A", delay, true, ScrambleMode.All);
-        catsText.text = "";
-        timerText.text = "";
+
+        var timeSpent = LevelManager.Instance.timer.elapsedTimeClamped;
+
+        var timeLeft = LevelManager.Instance.timer.durationRange.selected - timeSpent;
+
+        timerText.text = $"{(timeSpent / 60):#0}:{(timeSpent % 60):00}";
+        catsText.text = $"{CharacterModel.Instance.catsFound}/{LevelManager.Instance.settings.numCats}";
+
+        int finalScore = (int)(CharacterModel.Instance.catsFound * LevelManager.Instance.pointsPerCatFound +
+                               timeLeft * LevelManager.Instance.pointsPerSecondLeft);
+        text.DOText($"{finalScore}", delay, true, ScrambleMode.All).SetUpdate(true).Play();
     }
 }

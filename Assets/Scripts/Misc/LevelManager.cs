@@ -24,14 +24,19 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
 
     public SimpleTimer timer = new SimpleTimer();
 
-    [ReadOnly]
-    public bool isGameOver = false;
+    public float pointsPerCatFound = 500;
+    public float pointsPerSecondLeft = 20;
+
+    [ReadOnly] public bool isGameOver = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1;
+        HelperUtilities.UpdateCursorLock(true);
+
         playerSpawnRandomizer = new Randomizer<Transform>(playerSpawnPoints);
-        
+
         Initialize();
     }
 
@@ -43,7 +48,7 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
             if (CharacterModel.Instance.catsFound >= settings.numCats)
             {
                 // Found all cats
-
+                HUDScreenManager.Instance.enableEndscreen("Purr-fect!");
                 isGameOver = true;
             }
 
@@ -53,7 +58,9 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
                 if (timer.expired)
                 {
                     // Out of timed
-
+                    HUDScreenManager.Instance.enableEndscreen(CharacterModel.Instance.catsFound == 0
+                        ? "Cat-tastrophe!"
+                        : "Grrrrreat job!");
                     isGameOver = true;
                 }
             }
