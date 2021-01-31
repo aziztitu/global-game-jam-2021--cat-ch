@@ -182,7 +182,7 @@ MonoBehaviour:
   hidingDistance: 0.55
   inspectingDistance: 1.9
   carHonkPercent: 25
-  catState: 1
+  catState: 0
   maxCarTimer:
     min: 1
     max: 1.5
@@ -192,6 +192,9 @@ MonoBehaviour:
   meowSFX: Meow
   catPopSFX: CatPopping
   carHonkSFX: CarHonk
+  _btnStop: 0
+  _btnResume: 0
+  _btnUnwrapAI: 0
 --- !u!114 &4634836649989635076
 MonoBehaviour:
   m_ObjectHideFlags: 0
