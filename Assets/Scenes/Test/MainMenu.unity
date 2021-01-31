@@ -2677,7 +2677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenu: {fileID: 1864927669}
-  swapToLevel: 
+  swapToLevel: PlayerTest
   xOffset: 200
   xSmooth: 0.25
   delay: 0.25

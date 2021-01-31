@@ -45,12 +45,12 @@ public class MainScreenManager : MonoBehaviour
 
     public void changeLevel()
     {
-        SceneManager.LoadScene(swapToLevel);
+        GameManager.Instance.GoToScene(swapToLevel);
     }
 
     public void quit()
     {
-        Application.Quit();
+        GameManager.Instance.QuitGame();
     }
 
 }
