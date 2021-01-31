@@ -31,9 +31,6 @@ public class CatController : MonoBehaviour
     public CatState catState = CatState.Hiding;
 
     [Header("Timers")]
-    public RangeFloat maxMeowTimer = new RangeFloat(0, 0);
-    private float currentMeowBuffer = 0;
-
     public RangeFloat maxCarTimer = new RangeFloat(0, 0);
     private float currentCarBuffer = 0;
     private bool shouldHonk = false;
@@ -53,7 +50,6 @@ public class CatController : MonoBehaviour
         catModel = GetComponent<CatModel>();
         carAudioSource = GetComponent<AudioSource>();
 
-        currentMeowBuffer = maxMeowTimer.GetRandom();
         currentChangeLocationBuffer = maxChangeLocationTimer.GetRandom();
     }
 
@@ -71,8 +67,7 @@ public class CatController : MonoBehaviour
         }
         else
         {
-            //potentialHidingSpot = CatManager.Instance.FindOpenLocation(tempPlayer.transform.position, transform.position);
-            potentialHidingSpot = CatManager.Instance.FindOpenLocation();
+            potentialHidingSpot = CatManager.Instance.FindOpenLocation(CharacterModel.Instance.gameObject.transform.position, transform.position);
         }
         
         nav.SetDestination(potentialHidingSpot.position);
@@ -107,20 +102,8 @@ public class CatController : MonoBehaviour
         currentHidingSpot = newHidingSpot;
     }
 
-    void CountDownMeow()
-    {
-        currentMeowBuffer -= Time.deltaTime;
-
-        if (currentMeowBuffer <= 0)
-        {
-            Meow();
-            currentMeowBuffer = maxMeowTimer.GetRandom();
-        }
-    }
-
     public void Meow()
     {
-        Debug.Log("Meow");
         int randNumb = Random.Range(0, 101);
 
         if (randNumb < 10)
@@ -225,7 +208,6 @@ public class CatController : MonoBehaviour
 
     private void Update()
     {
-        CountDownMeow();
         CountDownRoam();
         
         CatStateUpdates();

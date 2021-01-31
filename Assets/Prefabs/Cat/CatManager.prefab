@@ -51,3 +51,6 @@ MonoBehaviour:
   - {fileID: 3070931843228665812, guid: 0f4139eeead689e46acfa8d4b017be53, type: 3}
   activeCats: []
   angleOfPlayerDistance: 45
+  maxMeowTimer:
+    min: 10
+    max: 12
