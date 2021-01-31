@@ -11,7 +11,7 @@ public class AnnouncerText
     public AudioClip audioClip;
 }
 
-public class AnnouncerPopups : MonoBehaviour
+public class AnnouncerPopups : SingletonMonoBehaviour<AnnouncerPopups>
 {
     public List<AnnouncerText> announcerTexts = new List<AnnouncerText>();
     private Randomizer<AnnouncerText> randomizer;
@@ -23,8 +23,9 @@ public class AnnouncerPopups : MonoBehaviour
     [ButtonAttribute("Show Announcement", "ShowAnnouncement")] [SerializeField]
     private bool _btnShowAnnouncement;
 
-    void Awake()
+    new void Awake()
     {
+        base.Awake();
         audioSource = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
 
