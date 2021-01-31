@@ -17,9 +17,9 @@ public class MainScreenManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DOTween.KillAll();
+        Time.timeScale = 1f;
+        HelperUtilities.UpdateCursorLock(false);
         mainMenu.DOAnchorPos(new Vector2(mainMenu.localPosition.x - xOffset, mainMenu.localPosition.y), xSmooth).SetDelay(0.25f);
-
     }
 
     // Update is called once per frame
