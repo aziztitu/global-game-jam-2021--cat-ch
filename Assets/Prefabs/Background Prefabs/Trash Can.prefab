@@ -108,11 +108,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2347623125499053561, guid: ec098215ed7384446b7a361baa611736,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 149faa94422d8ce4c8c0d56ad6488c40, type: 2}
+    - target: {fileID: 832175710702683479, guid: ec098215ed7384446b7a361baa611736,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 149faa94422d8ce4c8c0d56ad6488c40, type: 2}
     - target: {fileID: 919132149155446097, guid: ec098215ed7384446b7a361baa611736,
         type: 3}
       propertyPath: m_Name
       value: TrashCan
       objectReference: {fileID: 0}
+    - target: {fileID: 7525075423611208042, guid: ec098215ed7384446b7a361baa611736,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 52fdb3d5ec8e561429625d76598f7d4a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec098215ed7384446b7a361baa611736, type: 3}
 --- !u!4 &7714802663218735409 stripped

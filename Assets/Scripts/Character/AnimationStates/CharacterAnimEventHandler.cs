@@ -80,7 +80,7 @@ public class CharacterAnimEventHandler : KeyedStateController
         var dashTarget = owner.transform.position + dashDir;
         dashTarget.y = transform.position.y;
 
-        var cat = owner.FindCatInDirection(dashDir, 1);
+        var cat = owner.FindCatInDirection(dashDir, 2);
         if (cat)
         {
             dashTarget = cat.transform.position;
@@ -92,6 +92,11 @@ public class CharacterAnimEventHandler : KeyedStateController
 
             // Pause Cat Movement
             cat.Stop();
+
+            if (qteIndex <= 0)
+            {
+                owner.SetQteCat(cat);
+            }
         }
 
         owner.characterMovementController.DashTowards(dashTarget, dashSpeed, -1);
