@@ -121,7 +121,7 @@ public class CatController : MonoBehaviour
     {
         int randNumb = Random.Range(0, 101);
 
-        if (randNumb < 10)
+        if (randNumb < 5)
         {
             SoundEffectsManager.Instance.PlayAt(catPopSFX, transform.position);
         }
