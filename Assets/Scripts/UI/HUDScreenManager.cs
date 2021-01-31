@@ -91,6 +91,11 @@ public class HUDScreenManager : SingletonMonoBehaviour<HUDScreenManager>
 
     public void resumeButton()
     {
+        if (!gameIsPaused)
+        {
+            return;
+        }
+
         Debug.Log("moveleft");
         gameIsPaused = !gameIsPaused;
 
@@ -152,7 +157,7 @@ public class HUDScreenManager : SingletonMonoBehaviour<HUDScreenManager>
         var timeLeft = LevelManager.Instance.timer.durationRange.selected - timeSpent;
 
         timerText.text = $"{(timeSpent / 60):#0}:{(timeSpent % 60):00}";
-        catsText.text = $"{CharacterModel.Instance.catsFound}/{LevelManager.Instance.settings.numCats}";
+        catsText.text = $"{CharacterModel.Instance.catsFound} / {LevelManager.Instance.settings.numCats}";
 
         int finalScore = (int)(CharacterModel.Instance.catsFound * LevelManager.Instance.pointsPerCatFound +
                                timeLeft * LevelManager.Instance.pointsPerSecondLeft);

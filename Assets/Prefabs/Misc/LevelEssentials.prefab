@@ -435,6 +435,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -4.0000005
       objectReference: {fileID: 0}
+    - target: {fileID: 7323500808069315218, guid: 956649797c327f34a9aeb8eacbb1001e,
+        type: 3}
+      propertyPath: m_CameraDistance
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7672768134334900930, guid: 956649797c327f34a9aeb8eacbb1001e,
         type: 3}
       propertyPath: m_RootOrder
@@ -925,6 +930,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 6228916886762467981}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6228916888738284522 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2051404135, guid: b5daf44998701db4f8503869e3418af4,
+    type: 3}
+  m_PrefabInstance: {fileID: 6228916886762467981}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb181987377ed75418745de1b26d6a11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7325575398338938815
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -932,6 +949,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4751904640852782691}
     m_Modifications:
+    - target: {fileID: 2177304495692390932, guid: 33f807b5f35c85944ab81adc0d0e05b2,
+        type: 3}
+      propertyPath: hudScreenManager
+      value: 
+      objectReference: {fileID: 6228916888738284522}
     - target: {fileID: 2177304495692390933, guid: 33f807b5f35c85944ab81adc0d0e05b2,
         type: 3}
       propertyPath: m_RootOrder
