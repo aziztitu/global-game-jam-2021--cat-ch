@@ -61,7 +61,7 @@ public class HUDScreenManager : SingletonMonoBehaviour<HUDScreenManager>
         betterText.text = text.text;
 
         var timeSpent = LevelManager.Instance.timer.elapsedTimeClamped;
-        liveTimerText.text = $"{(timeSpent / 60):#0}:{(timeSpent % 60):00}";
+        liveTimerText.text = $"{Mathf.Floor(timeSpent / 60):#0}:{Mathf.Floor(timeSpent % 60):00}";
         liveTimerFiller.fillAmount = timeSpent / LevelManager.Instance.timer.durationRange.selected;
 
         liveCatsText.text = $"{CharacterModel.Instance.catsFound} / {LevelManager.Instance.settings.numCats}";
