@@ -59,6 +59,8 @@ public class CatController : MonoBehaviour
     [SerializeField]
     private bool _btnUnwrapAI;
 
+    public GameObject CagePrefab;
+
     private void Awake()
     {
         nav = GetComponent<NavMeshAgent>();
@@ -192,6 +194,8 @@ public class CatController : MonoBehaviour
         carAudioSource.enabled = false;
 
         this.gameObject.GetComponent<Collider>().enabled = false;
+
+        PutInCage();
     }
 
 
@@ -273,8 +277,21 @@ public class CatController : MonoBehaviour
         CatStateUpdates();
     }
 
-    private void OnDestroy()
+    public void PutInCage()
     {
+        GameObject CageParent = new GameObject($"{ gameObject.name } Caged");
+        GameObject obj = Instantiate(CagePrefab);
+
+        Vector3 currentPosition = transform.position;
+        currentPosition.y -= transform.localScale.y;
+
+        CageParent.transform.position = currentPosition;
+        transform.position = obj.GetComponent<Cage>().cageTransform.position;
+        transform.rotation = obj.GetComponent<Cage>().cageTransform.rotation;
+        transform.parent = obj.transform;
+        obj.transform.parent = CageParent.transform;
+        //transform.localScale = obj.GetComponent<Cage>().cageTransform.localScale;
+
         CatManager.Instance.activeCats.Remove(this);
 
         if (!CatManager.Instance.hidingSpots.Contains(currentHidingSpot))
