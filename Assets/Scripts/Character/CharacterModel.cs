@@ -410,14 +410,19 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
             return;
         }
 
-        selectedQteCat.UnwrapAI();
 
         selectedQteCat.transform.SetParent(hand);
         selectedQteCat.transform.DOLocalMove(Vector3.zero, 0.3f).Play();
 
-        Destroy(selectedQteCat.gameObject, 1f);
+        selectedQteCat.UnwrapAI();
 
-        selectedQteCat = null;
+        // Destroy(selectedQteCat.gameObject, 1f);
+
+        this.WaitAndExecute(() =>
+        {
+            selectedQteCat.PutInCage();
+            selectedQteCat = null;
+        }, 1f);
 
         catsFound++;
     }
