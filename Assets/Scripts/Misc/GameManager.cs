@@ -21,7 +21,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     public event Action onScreenSizeChanged;
 
-    public LevelManager.LevelSettings selectedLevelSettings = null;
+    public LevelManager.LevelSettings selectedLevelSettings { get; set; } = null;
 
     new void Awake()
     {
