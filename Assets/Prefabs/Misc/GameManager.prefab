@@ -43,6 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70cb8a2ca57df674986a8c5906242884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterSelectionScene: CharacterSelection
+  characterSelectionScene: CharacterSelect
   mainMenuScene: MainMenu
-  mainLevelScene: PlayerTest
+  mainLevelScene: NeighborhoodLevel
+  selectedLevelSettings:
+    numCats: 5
+    maxTime: 60
+    characterPrefab: {fileID: 0}
+    difficultyLevel: 0.5

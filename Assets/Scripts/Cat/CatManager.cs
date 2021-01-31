@@ -140,7 +140,7 @@ public class CatManager : SingletonMonoBehaviour<CatManager>
 
     public void FindClosestCats()
     {
-        if (activeCats.Count == 0)
+        if (activeCats.Count == 0 || LevelManager.Instance.isGameOver)
         {
             return;
         }

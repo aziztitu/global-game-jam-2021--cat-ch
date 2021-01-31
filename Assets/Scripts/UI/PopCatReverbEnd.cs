@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class PopCatReverbEnd : MonoBehaviour
 {
-    public float maxMusicVolume = 0;
+    private float maxMusicVolume = 0;
 
     void Start()
     {
