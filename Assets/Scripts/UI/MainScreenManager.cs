@@ -16,6 +16,7 @@ public class MainScreenManager : MonoBehaviour
     public int yOffset = 300;
     public float xSmooth = 0.25f;
     public float delay = 1.2f;
+    public float logoDelay = 1f;
 
     private Vector2 startMenu;
     private Vector2 startMenuOffset;
@@ -69,7 +70,7 @@ public class MainScreenManager : MonoBehaviour
 
     public void tweenDownDelay()
     {
-        logoTrans.DOAnchorPos(logo, xSmooth).SetDelay(0.8f);
+        logoTrans.DOAnchorPos(logo, xSmooth).SetDelay(logoDelay);
     }
 
     public void changeLevel()

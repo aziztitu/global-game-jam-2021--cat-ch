@@ -113,25 +113,25 @@ MonoBehaviour:
   - text: 'How
 
       Fur-midable!'
-    audioClip: {fileID: 8300000, guid: 9d1dda45fb6651f4790ee44378da8aa9, type: 3}
+    audioClip: {fileID: 8300000, guid: 7f39ce91e5c959f4f96eb88617c3cc1b, type: 3}
   - text: Purr-fect!
-    audioClip: {fileID: 8300000, guid: d1386faeb4a660a4683292d2fd849c12, type: 3}
+    audioClip: {fileID: 8300000, guid: f0e3e35d45e9f354ba3b900a540dd25c, type: 3}
   - text: Cat-tacular!
-    audioClip: {fileID: 8300000, guid: 78fa62845bb987246912d80a748640dd, type: 3}
+    audioClip: {fileID: 8300000, guid: a7af57afd77a93d4ea37e2710b562b21, type: 3}
   - text: You're the Meow-ster!
-    audioClip: {fileID: 8300000, guid: 173eaba0350c88a458a159427e1b126e, type: 3}
+    audioClip: {fileID: 8300000, guid: 53757cabacf98c64d8c2ed4a07aaf775, type: 3}
   - text: 'What a
 
       Cat-ch!'
-    audioClip: {fileID: 8300000, guid: d398cc035282f02488429cd39aa67192, type: 3}
+    audioClip: {fileID: 8300000, guid: 2b3780e89c2c82045abc301fc8056bd9, type: 3}
   - text: Im-purr-sive!
-    audioClip: {fileID: 8300000, guid: f50c113b26c1885489361f84c2e18cec, type: 3}
+    audioClip: {fileID: 8300000, guid: bd5dcf4182d2fe2469d28017154c3e67, type: 3}
   - text: Paw-sitively Amazing!
-    audioClip: {fileID: 8300000, guid: 7a266d99e5699e6439182b8da5e7e3c8, type: 3}
+    audioClip: {fileID: 8300000, guid: dfcc93e169ae96848bbd12a286f55135, type: 3}
   - text: 'Nice
 
       Mew-vement!'
-    audioClip: {fileID: 8300000, guid: 979e6b6e7ac04f84d9026d168444521c, type: 3}
+    audioClip: {fileID: 8300000, guid: 4129a8e312313314da8d150545a8c9f1, type: 3}
   textToAssign: {fileID: 3285699609208774409}
   _btnShowAnnouncement: 0
 --- !u!82 &4410931535398574018
@@ -146,7 +146,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.75
   m_Pitch: 1
   Loop: 0
   Mute: 0

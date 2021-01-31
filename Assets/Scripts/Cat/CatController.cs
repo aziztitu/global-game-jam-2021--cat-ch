@@ -139,6 +139,11 @@ public class CatController : MonoBehaviour
 
     void CountDownCar()
     {
+        if (LevelManager.Instance.isGameOver)
+        {
+            return;
+        }
+
         currentCarBuffer -= Time.deltaTime;
 
         if (currentCarBuffer <= 0 && !hasCarHonked)
