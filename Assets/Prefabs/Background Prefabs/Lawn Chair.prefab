@@ -98,6 +98,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: LawnChair
       objectReference: {fileID: 0}
+    - target: {fileID: 8072275847943315967, guid: b5f5e9143f7ff584c8854e3be4f8420b,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a3cde0ca978958a40ad788d28e900644, type: 2}
+    - target: {fileID: 8912882468269335951, guid: b5f5e9143f7ff584c8854e3be4f8420b,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 835ea136e3d3a8f4582fe1d431befaa8, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5f5e9143f7ff584c8854e3be4f8420b, type: 3}
 --- !u!4 &5895936139226542758 stripped
