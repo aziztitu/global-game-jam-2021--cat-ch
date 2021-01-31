@@ -15,10 +15,12 @@ public class AnnouncerPopups : MonoBehaviour
     
     public TMPro.TextMeshProUGUI textToAssign;
     private AudioSource audioSource;
+    private Animator anim;
 
-    private void Awake()
+    void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        anim = GetComponent<Animator>();
     }
 
     public void ShowAnnouncement()
@@ -26,5 +28,8 @@ public class AnnouncerPopups : MonoBehaviour
         int randNumb = Random.Range(0, announcerTexts.Count);
 
         textToAssign.text = announcerTexts[randNumb].text;
+        audioSource.clip = announcerTexts[randNumb].audioClip;
+        audioSource.Play();
+        //anim.fjfjf
     }
 }
