@@ -17,7 +17,7 @@ public class HUDScreenManager : MonoBehaviour
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI catsText;
 
-    public int offset = 100;
+    public int offset = 300;
     public int optionOffset = 400;
     public float smooth = 0.25f;
     public float delay = 6;
@@ -25,10 +25,18 @@ public class HUDScreenManager : MonoBehaviour
     public static bool gameIsPaused = false;
     public static bool optionsOn = false;
 
+    private Vector2 startMenu;
+    private Vector2 startMenuOffset;
+    private Vector2 startOption;
+    private Vector2 startOptionOffset;
+
     // Start is called before the first frame update
     void Start()
     {
-        // DOTween.KillAll();
+        startMenu = new Vector2(menuPanel.anchoredPosition.x, menuPanel.anchoredPosition.y);
+        startMenuOffset = new Vector2(menuPanel.anchoredPosition.x + offset, 0);
+        startOption = new Vector2(optionPanel.anchoredPosition.x, optionPanel.anchoredPosition.y);
+        startOptionOffset = new Vector2(optionPanel.anchoredPosition.x, optionPanel.anchoredPosition.y + optionOffset);
     }
 
     void Update()
@@ -51,7 +59,7 @@ public class HUDScreenManager : MonoBehaviour
         if (gameIsPaused)
         {
             Debug.Log("moveright");
-            menuPanel.DOAnchorPos(new Vector2(menuPanel.localPosition.x + offset, 0), smooth).SetUpdate(true);
+            menuPanel.DOAnchorPos(startMenuOffset, smooth).SetUpdate(true);
             Time.timeScale = 0f;
             HelperUtilities.UpdateCursorLock(false);
         }
@@ -61,7 +69,7 @@ public class HUDScreenManager : MonoBehaviour
             
             if(DOTween.TotalPlayingTweens() == 0)
             {
-                menuPanel.DOAnchorPos(new Vector2(menuPanel.localPosition.x - offset, 0), smooth).SetUpdate(true);
+                menuPanel.DOAnchorPos(startMenu, smooth).SetUpdate(true);
             }
             Time.timeScale = 1;
             HelperUtilities.UpdateCursorLock(true);
@@ -79,11 +87,11 @@ public class HUDScreenManager : MonoBehaviour
         menuPanel.DOKill(true);
         if (DOTween.TotalPlayingTweens() == 0)
         {
-            menuPanel.DOAnchorPos(new Vector2(menuPanel.localPosition.x - offset, 0), smooth).SetUpdate(true);
+            menuPanel.DOAnchorPos(startMenu, smooth).SetUpdate(true);
             optionsButtonTweenBack();
             gameIsPaused = !gameIsPaused;
 
-            PauseGame();
+            //PauseGame();
         }
     }
 
@@ -91,14 +99,14 @@ public class HUDScreenManager : MonoBehaviour
     {
         if(!optionsOn)
         {
-            optionPanel.DOAnchorPos(new Vector2(optionPanel.localPosition.x, optionPanel.localPosition.y + optionOffset), smooth).SetUpdate(true);
+            optionPanel.DOAnchorPos(startOptionOffset, smooth).SetUpdate(true);
             optionsOn = !optionsOn;
         }
     }
 
     public void optionsButtonTweenBack()
     {
-        optionPanel.DOAnchorPos(new Vector2(optionPanel.localPosition.x, optionPanel.localPosition.y - optionOffset), smooth).SetUpdate(true);
+        optionPanel.DOAnchorPos(startOption, smooth).SetUpdate(true);
         optionsOn = !optionsOn;
     }
 
