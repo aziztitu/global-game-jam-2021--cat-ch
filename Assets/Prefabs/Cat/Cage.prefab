@@ -140,6 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cageTransform: {fileID: 6102154785823421377}
+  pointLight: {fileID: 1794994504547155622}
 --- !u!95 &6035069931058955412
 Animator:
   serializedVersion: 3
