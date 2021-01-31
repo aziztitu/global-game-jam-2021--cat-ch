@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
-public class PauseScreenManager : MonoBehaviour
+public class HUDScreenManager : MonoBehaviour
 {
     public RectTransform menuPanel;
     public RectTransform optionPanel;
 
+    public GameObject endS;
+    public Text text;
+    public TextMeshProUGUI betterText;
+    public TextMeshProUGUI timerText;
+    public TextMeshProUGUI catsText;
+
     public int offset = 100;
     public int optionOffset = 400;
     public float smooth = 0.25f;
+    public float delay = 6;
 
     public static bool gameIsPaused = false;
     public static bool optionsOn = false;
@@ -29,6 +37,9 @@ public class PauseScreenManager : MonoBehaviour
             gameIsPaused = !gameIsPaused;
             PauseGame();
         }
+
+        
+        betterText.text = text.text;
     }
 
     void PauseGame()
@@ -89,5 +100,15 @@ public class PauseScreenManager : MonoBehaviour
     public void quitButton()
     {
         Application.Quit();
+    }
+
+    //hook up the values here
+    public void enableEndscreen()
+    {
+        endS.SetActive(true);
+        text.DOText("A", delay, true, ScrambleMode.All);
+        catsText.text = "";
+        timerText.text = "";
+
     }
 }
