@@ -2886,9 +2886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenu: {fileID: 1864927669}
-  logoTrans: {fileID: 349001708}
-  logoImage: {fileID: 349001706}
-  swapToLevel: PlayerTest
+  swapToLevel: NeighborhoodLevel
   xOffset: 200
   yOffset: 300
   xSmooth: 0.25
