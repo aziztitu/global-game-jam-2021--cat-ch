@@ -1,44 +1,66 @@
-﻿using System.Collections;
+﻿using BasicTools.ButtonInspector;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CatManager : SingletonMonoBehaviour<CatManager>
 {
-    [Header("Hiding Spots")]
-    public List<Transform> hidingSpots = new List<Transform>();
     [Header("Cat Spawning")]
+    [ButtonAttribute("Spawn Cat", "SpawnCat")]
+    [SerializeField]
+    private bool _btnSpawnShield;
+
     public List<GameObject> catPrefabsToSpawn = new List<GameObject>();
 
     [HideInInspector] public List<CatController> activeCats = new List<CatController>();
+
+    [Header("Hiding Spots")]
+    public List<Transform> hidingSpots = new List<Transform>();
+    private int initialHidingSpotCount = 0;
     
+    [Header("Cat Avoidance")]
     [Range(0,360)]
     public float angleOfPlayerDistance = 0;
+
+    [Header("Cat Caller")]
+    public RangeFloat maxMeowTimer = new RangeFloat(0, 0);
+    private float currentMeowBuffer = 0;
 
     new void Awake()
     {
         base.Awake();
+
+        currentMeowBuffer = maxMeowTimer.GetRandom();
+    }
+
+    private void Start()
+    {
+        initialHidingSpotCount = hidingSpots.Count;
     }
 
     public void SpawnCat()
     {
-        if (hidingSpots.Count <= 1)
+        if (activeCats.Count >= initialHidingSpotCount - 1)
         {
             return;
         }
 
-        int randNumb = Random.Range(0, catPrefabsToSpawn.Count);
+        if (activeCats.Count < initialHidingSpotCount - 1)
+        {
+            int randNumb = Random.Range(0, catPrefabsToSpawn.Count);
 
-        GameObject cat = Instantiate(catPrefabsToSpawn[randNumb], this.transform);
-        Transform spawnedLocation = FindOpenLocation();
+            GameObject cat = Instantiate(catPrefabsToSpawn[randNumb], this.transform);
+            Transform spawnedLocation = FindOpenLocation();
 
-        cat.GetComponent<CatController>().nav.enabled = false;
-        cat.transform.position = spawnedLocation.position;
-        cat.GetComponent<CatController>().nav.enabled = true;
+            cat.GetComponent<CatController>().nav.enabled = false;
+            cat.transform.position = spawnedLocation.position;
+            cat.GetComponent<CatController>().nav.enabled = true;
 
-        activeCats.Add(cat.GetComponent<CatController>());
+            activeCats.Add(cat.GetComponent<CatController>());
 
-        cat.GetComponent<CatController>().SetCurrentHidingSpot(spawnedLocation);
-        hidingSpots.Remove(spawnedLocation);
+            cat.GetComponent<CatController>().SetCurrentHidingSpot(spawnedLocation);
+            hidingSpots.Remove(spawnedLocation);
+        }
     }
 
     public Transform FindOpenLocation()
@@ -59,7 +81,6 @@ public class CatManager : SingletonMonoBehaviour<CatManager>
 
             if (Mathf.Abs(Vector3.Angle((tempHideSpot - tempCatPos).normalized, (tempPlayerPos - tempCatPos).normalized)) > angleOfPlayerDistance)
             {
-                Debug.Log(Mathf.Abs(Vector3.Angle((tempHideSpot - tempCatPos).normalized, (tempPlayerPos - tempCatPos).normalized)));
                 tempHideSpots.Add(hidingSpots[i]);
             }
         }
@@ -91,11 +112,78 @@ public class CatManager : SingletonMonoBehaviour<CatManager>
         hidingSpots.Add(catHidingSpot);
     }
 
+    void CountDownMeow()
+    {
+        currentMeowBuffer -= Time.deltaTime;
+
+        if (currentMeowBuffer <= 0)
+        {
+            FindClosestCats();
+            currentMeowBuffer = maxMeowTimer.GetRandom();
+        }
+    }
+
+    public void FindClosestCats()
+    {
+        if (activeCats.Count == 0)
+        {
+            return;
+        }
+        else if (activeCats.Count == 1)
+        {
+            activeCats[0].Meow();
+            return;
+        }
+
+        List<CatController> tempCats = new List<CatController>();
+        for (int i = 0; i < activeCats.Count; i++)
+        {
+            if (activeCats[i].catState == CatController.CatState.Hiding)
+            {
+                tempCats.Add(activeCats[i]);
+            }
+        }
+
+        if (tempCats.Count == 0)
+        {
+            return;
+        }
+        else if (tempCats.Count == 1)
+        {
+            tempCats[0].Meow();
+            return;
+        }
+
+        List<CatController> closestCats = new List<CatController>();
+        for (int i = 0; i < 2; i++)
+        {
+            Vector3 tempPlayer = CharacterModel.Instance.gameObject.transform.position, tempCat = tempCats[0].gameObject.transform.position;
+            tempPlayer.y = 0;
+            tempCat.y = 0;
+            float minDist = Vector3.Distance(tempPlayer, tempCat);
+            CatController closestCurrentCat = tempCats[0];
+            for (int j = 1; j < tempCats.Count; j++)
+            {
+                tempCat = tempCats[j].gameObject.transform.position;
+                tempCat.y = 0;
+
+                if (Vector3.Distance(tempPlayer, tempCat) < minDist)
+                {
+                    minDist = Vector3.Distance(tempPlayer, tempCat);
+                    closestCurrentCat = tempCats[j];
+                }
+            }
+
+            closestCats.Add(closestCurrentCat);
+            tempCats.Remove(closestCurrentCat);
+        }
+
+        int randNumb = Random.Range(0, closestCats.Count);
+        closestCats[randNumb].Meow();
+    }
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SpawnCat();
-        }
+        CountDownMeow();
     }
 }
