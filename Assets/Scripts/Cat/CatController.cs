@@ -283,6 +283,11 @@ public class CatController : MonoBehaviour
         CountDownRoam();
         
         CatStateUpdates();
+
+        if (LevelManager.Instance.isGameOver && carAudioSource.isPlaying)
+        {
+            carAudioSource.Stop();
+        }
     }
 
     public void PutInCage()
@@ -294,6 +299,13 @@ public class CatController : MonoBehaviour
         currentPosition.y -= transform.localScale.y;
 
         CageParent.transform.position = currentPosition;
+
+        Vector3 temp1 = CageParent.transform.position, temp2 = ThirdPersonCamera.Instance.gameObject.transform.position;
+        temp1.y = 0;
+        temp2.y = 0;
+
+        CageParent.transform.rotation = Quaternion.LookRotation((temp2 - temp1).normalized, Vector3.up);
+
         transform.position = obj.GetComponent<Cage>().cageTransform.position;
         transform.rotation = obj.GetComponent<Cage>().cageTransform.rotation;
         transform.parent = obj.transform;
