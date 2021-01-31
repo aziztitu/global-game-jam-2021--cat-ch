@@ -36,6 +36,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         DontDestroyOnLoad(gameObject);
 
         InputSystem.onEvent += (ptr, device) => { lastDetectedDevice = device; };
+
+        QualitySettings.vSyncCount = 0; // VSync must be disabled.
+        Application.targetFrameRate = 60;
     }
 
     // Update is called once per frame
