@@ -203,6 +203,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1131320338375082, guid: b663855bc4312fb4c8b35e97c2eaa5e8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097645856853878420, guid: b663855bc4312fb4c8b35e97c2eaa5e8,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 285d86a8255cac949b22cdb18ea6fe89, type: 3}
     - target: {fileID: 1532234407275214081, guid: b663855bc4312fb4c8b35e97c2eaa5e8,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -297,6 +306,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -2.9999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137053936497706944, guid: b663855bc4312fb4c8b35e97c2eaa5e8,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3137053936497706944, guid: b663855bc4312fb4c8b35e97c2eaa5e8,
         type: 3}
