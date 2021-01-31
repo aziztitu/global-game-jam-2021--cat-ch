@@ -220,6 +220,11 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
 
     public void OnQtePressed(int buttonPressed)
     {
+        if (Time.timeScale < 0.1f)
+        {
+            return;
+        }
+
         if (characterAnimEventHandler.isInDivingState && !characterAnimEventHandler.qteSequenceFailed && qtePending)
         {
             qtePassed = selectedQte == buttonPressed;
