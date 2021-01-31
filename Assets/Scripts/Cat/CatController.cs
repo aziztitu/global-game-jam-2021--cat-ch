@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class CatController : MonoBehaviour
 {
     [HideInInspector] public NavMeshAgent nav;
+    private CatModel catModel;
 
     private Transform currentHidingSpot = null;
     private Transform potentialHidingSpot = null;
@@ -40,6 +41,7 @@ public class CatController : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         nav = GetComponent<NavMeshAgent>();
+        catModel = GetComponent<CatModel>();
 
         currentMeowBuffer = maxMeowTimer.GetRandom();
         currentChangeLocationBuffer = maxChangeLocationTimer.GetRandom();
@@ -48,6 +50,7 @@ public class CatController : MonoBehaviour
     private void OnEnable()
     {
         catState = CatState.Hiding;
+        catModel.SetHidingAvatar();
     }
 
     public void FindNewHidingSpot()
@@ -134,10 +137,12 @@ public class CatController : MonoBehaviour
             switch (state)
             {
                 case CatState.Hiding:
+                    catModel.SetHidingAvatar();
                     ChangeCurrentHidingPlace();
                     
                     break;
                 case CatState.Running:
+                    catModel.SetRunningAvatar();
                     FindNewHidingSpot();
 
                     if (currentHidingSpot != null)
