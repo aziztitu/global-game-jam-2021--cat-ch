@@ -43,14 +43,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d827c7bd279916a4883c43faf253d986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _btnSpawnShield: 0
+  catPrefabsToSpawn:
+  - {fileID: 3070931843228665812, guid: 0f4139eeead689e46acfa8d4b017be53, type: 3}
+  activeCats: []
   hidingSpots:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  catPrefabsToSpawn:
-  - {fileID: 3070931843228665812, guid: 0f4139eeead689e46acfa8d4b017be53, type: 3}
-  activeCats: []
   angleOfPlayerDistance: 45
+  playerAvoidanceRadius: 5
   maxMeowTimer:
     min: 10
     max: 12

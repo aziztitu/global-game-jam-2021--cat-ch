@@ -415,7 +415,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4714276857027660255
 RectTransform:
   m_ObjectHideFlags: 0
@@ -435,7 +435,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 140, y: -75}
+  m_AnchoredPosition: {x: 315, y: -92}
   m_SizeDelta: {x: 35, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7236804458347724585
@@ -886,10 +886,18 @@ MonoBehaviour:
   - {fileID: 6240945837566343682}
   - {fileID: 6491741286907468566}
   - {fileID: 8412666717569474334}
-  qteBaseDuration: 1.5
+  qteDurationRange:
+    min: 1.25
+    max: 1.8
   qteBaseTimeScale: 0.15
   qteCatMaxRange: 6
   qteCatMaxAngle: 40
+  qteXRange:
+    min: 50
+    max: 160
+  qteYRange:
+    min: 0
+    max: 70
   deathAnimationDuration: 3
   playerHitCamShakeDuration: 1
   playerHitCamShakeMinInterval: 1
@@ -1380,7 +1388,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
