@@ -62,7 +62,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 7
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -92,11 +92,11 @@ MonoBehaviour:
   carHonkPercent: 25
   catState: 0
   maxCarTimer:
-    min: 1
-    max: 1.5
-  maxChangeLocationTimer:
-    min: 3
+    min: 2
     max: 5
+  maxChangeLocationTimer:
+    min: 40
+    max: 60
   meowSFX: Meow
   catPopSFX: CatPopping
   carHonkSFX: CarHonk

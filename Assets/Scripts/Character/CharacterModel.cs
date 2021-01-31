@@ -326,7 +326,7 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
                 selectedQteCat?.ChangeState(CatController.CatState.Running);
             }
 
-            var nearbyCats = FindCatsInRadius(2);
+            var nearbyCats = FindCatsInRadius(8).Where(cat => cat != selectedQteCat);
             foreach (var cat in nearbyCats)
             {
                 if (cat?.catState == CatController.CatState.Running)
@@ -422,6 +422,21 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
         selectedQteCat.UnwrapAI();
 
         // Destroy(selectedQteCat.gameObject, 1f);
+
+
+        var nearbyCats = FindCatsInRadius(8).Where(cat => cat != selectedQteCat);
+        foreach (var cat in nearbyCats)
+        {
+            if (cat?.catState == CatController.CatState.Running)
+            {
+                // Resume Cat Movement
+                cat?.Resume();
+            }
+            else
+            {
+                cat?.ChangeState(CatController.CatState.Running);
+            }
+        }
 
         this.WaitAndExecute(() =>
         {
