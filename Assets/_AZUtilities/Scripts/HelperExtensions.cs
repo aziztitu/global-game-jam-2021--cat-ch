@@ -37,14 +37,14 @@ public static class HelperExtensions
 {
     #region MonoBehaviour
 
-    public static void WaitAndExecute(this MonoBehaviour self, Action action, float delay, bool realtime = false)
+    public static Coroutine WaitAndExecute(this MonoBehaviour self, Action action, float delay, bool realtime = false)
     {
-        self.StartCoroutine(HelperUtilities.WaitAndExecute(action, delay, realtime));
+        return self.StartCoroutine(HelperUtilities.WaitAndExecute(action, delay, realtime));
     }
 
-    public static void WaitForFrameAndExecute(this MonoBehaviour self, Action action)
+    public static Coroutine WaitForFrameAndExecute(this MonoBehaviour self, Action action)
     {
-        self.StartCoroutine(HelperUtilities.WaitForFrameAndExecute(action));
+        return self.StartCoroutine(HelperUtilities.WaitForFrameAndExecute(action));
     }
 
     #endregion

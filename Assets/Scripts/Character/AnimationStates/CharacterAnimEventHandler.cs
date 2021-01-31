@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CharacterAnimEventHandler : KeyedStateController
 {
@@ -31,6 +32,8 @@ public class CharacterAnimEventHandler : KeyedStateController
             owner.qtePassed = false;
             qteSequenceFailed = false;
             qteIndex = -1;
+
+            this.WaitAndExecute(() => { owner.PlaySFX($"Grunt{Random.Range(1, 4)}", 0.4f); }, 0.3f, true);
         });
         this.AddStateExitListener("dive", (s, animator1, arg3, arg4) =>
         {
@@ -73,9 +76,25 @@ public class CharacterAnimEventHandler : KeyedStateController
             dashDir = owner.avatar.forward;
         }
 
+        var dashSpeed = animEvent.floatParameter;
         var dashTarget = owner.transform.position + dashDir;
         dashTarget.y = transform.position.y;
-        owner.characterMovementController.DashTowards(dashTarget, animEvent.floatParameter, -1);
+
+        var cat = owner.FindCatInDirection(dashDir, 1);
+        if (cat)
+        {
+            dashTarget = cat.transform.position;
+
+            var toCat = cat.transform.position - transform.position;
+            toCat.y = 0;
+
+            dashSpeed = HelperUtilities.Remap(toCat.magnitude, 0, owner.qteCatMaxRange, 0, dashSpeed);
+
+            // Pause Cat Movement
+            cat.Stop();
+        }
+
+        owner.characterMovementController.DashTowards(dashTarget, dashSpeed, -1);
     }
 
 
