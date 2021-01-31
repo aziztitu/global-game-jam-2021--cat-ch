@@ -62,6 +62,10 @@ public class CharacterMovementController : MonoBehaviour
 
     private Transform frameOfReference => ThirdPersonCamera.Instance.virtualCamera.transform;
 
+    public bool canMove => characterModel.isAlive && !characterModel.characterAnimEventHandler.isInDivingState &&
+                           !characterModel.characterAnimEventHandler.isInFallingState &&
+                           !characterModel.characterAnimEventHandler.isInGettingUpState;
+
     private class GizmosData
     {
         public Vector3 raycastDir;
@@ -92,6 +96,9 @@ public class CharacterMovementController : MonoBehaviour
             // isDashing = false;
             isDodging = false;
         });
+
+        characterModel.characterAnimEventHandler.AddStateExitListener("dive",
+            (key, animator, stateInfo, layer) => { StopDashing(); });
     }
 
     public void OnDrawGizmos()
@@ -110,7 +117,6 @@ public class CharacterMovementController : MonoBehaviour
         // Gizmos.DrawRay(transform.position, _gizmosData.raycastDir * 10);
         // Gizmos.DrawWireSphere(transform.position, 10f);
     }
-
 
     // Update is called once per frame
     private void Update()
@@ -133,7 +139,7 @@ public class CharacterMovementController : MonoBehaviour
         }
 
         m_PreviouslyGrounded = m_CharacterController.isGrounded;
-        
+
         if (!isDodging && characterModel.characterInput.Dodge && m_CharacterController.isGrounded &&
             timeSinceDodgeStart > dodgeDuration * 2)
         {
@@ -352,7 +358,7 @@ public class CharacterMovementController : MonoBehaviour
             desiredMove.Normalize();
         }
 
-        if (desiredMove.magnitude > 0)
+        if (desiredMove.magnitude > 0 && speed > 0)
         {
             //            Vector3 lookAtTarget = transform.position +
             //                                   (thirdPersonCamera.virtualCamera.transform.forward * 5);
@@ -461,6 +467,11 @@ public class CharacterMovementController : MonoBehaviour
         if (m_Input.sqrMagnitude > 1)
         {
             m_Input.Normalize();
+        }
+
+        if (!canMove)
+        {
+            speed = 0;
         }
     }
 

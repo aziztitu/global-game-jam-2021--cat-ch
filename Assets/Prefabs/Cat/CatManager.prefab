@@ -43,8 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d827c7bd279916a4883c43faf253d986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hidingSpots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  hidingSpots: []
   angleOfPlayerDistance: 45
