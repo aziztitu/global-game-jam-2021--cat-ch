@@ -195,7 +195,7 @@ public class CatController : MonoBehaviour
 
         this.gameObject.GetComponent<Collider>().enabled = false;
 
-        PutInCage();
+        // PutInCage();
     }
 
 
