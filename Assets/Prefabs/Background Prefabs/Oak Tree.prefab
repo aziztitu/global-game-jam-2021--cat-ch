@@ -108,11 +108,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4777139269410217498, guid: d7b7906e188bc3446be85c117325e2e0,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e9be0dbd0d8155a4c97d9107749c2a9f, type: 2}
     - target: {fileID: 919132149155446097, guid: d7b7906e188bc3446be85c117325e2e0,
         type: 3}
       propertyPath: m_Name
       value: OakTree
       objectReference: {fileID: 0}
+    - target: {fileID: 3503441896318702190, guid: d7b7906e188bc3446be85c117325e2e0,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c3eca542cc862eb4f902aa317939701d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7b7906e188bc3446be85c117325e2e0, type: 3}
 --- !u!4 &4686344774283819328 stripped
