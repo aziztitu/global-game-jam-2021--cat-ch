@@ -100,7 +100,11 @@ public class CatController : MonoBehaviour
             return;
         }
 
-        if (Vector3.Distance(transform.position, potentialHidingSpot.position) < hidingDistance)
+        Vector3 temp1 = transform.position, temp2 = potentialHidingSpot.position;
+        temp1.y = 0;
+        temp2.y = 0;
+
+        if (Vector3.Distance(temp1, temp2) < hidingDistance)
         {
             ChangeState(CatState.Hiding);
         }
@@ -257,7 +261,11 @@ public class CatController : MonoBehaviour
 
                 break;
             case CatState.Running:
-                if (Vector3.Distance(transform.position, potentialHidingSpot.position) < inspectingDistance)
+                Vector3 temp1 = transform.position, temp2 = potentialHidingSpot.position;
+                temp1.y = 0;
+                temp2.y = 0;
+
+                if (Vector3.Distance(temp1, temp2) < inspectingDistance)
                 {
                     CheckNewHidingSpot();
                 }
