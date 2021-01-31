@@ -235,9 +235,17 @@ public class HelperUtilities
         return layerMask;
     }
 
-    public static IEnumerator WaitAndExecute(Action action, float delay)
+    public static IEnumerator WaitAndExecute(Action action, float delay, bool realtime = false)
     {
-        yield return new WaitForSeconds(delay);
+        if (realtime)
+        {
+            yield return new WaitForSecondsRealtime(delay);
+        }
+        else
+        {
+            yield return new WaitForSeconds(delay);
+        }
+
         action?.Invoke();
     }
 

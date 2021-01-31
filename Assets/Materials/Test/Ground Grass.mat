@@ -78,8 +78,8 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _GrassHeight: 1.6
-    - _GrassWidth: 0.15
+    - _GrassHeight: 1.45
+    - _GrassWidth: 0.09
     - _MaxDist: 60
     - _Metallic: 0
     - _MinDist: 40
@@ -88,14 +88,14 @@ Material:
     - _Parallax: 0.02
     - _QueueOffset: 0
     - _Rad: 0.71
-    - _Radius: 1.48
+    - _Radius: 1.26
     - _RandomHeight: 0.25
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Strength: 286.87
+    - _Strength: 286.31
     - _Surface: 0
     - _UVSec: 0
     - _WindSpeed: 125.51
