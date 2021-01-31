@@ -108,11 +108,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2878818583241162129, guid: 15412c4a35f074743bbdcd5b7f897a38,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8b4a0f07c0a6f914ca37dc121e4923e0, type: 2}
     - target: {fileID: 919132149155446097, guid: 15412c4a35f074743bbdcd5b7f897a38,
         type: 3}
       propertyPath: m_Name
       value: BirchTree
       objectReference: {fileID: 0}
+    - target: {fileID: 9203779385508874802, guid: 15412c4a35f074743bbdcd5b7f897a38,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: aa99cca7947f558408f6849bfb5e5b1d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15412c4a35f074743bbdcd5b7f897a38, type: 3}
 --- !u!4 &8903116637752162473 stripped
