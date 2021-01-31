@@ -69,6 +69,11 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
 
     void Initialize()
     {
+        if (GameManager.Instance.selectedLevelSettings != null)
+        {
+            settings = GameManager.Instance.selectedLevelSettings;
+        }
+
         var spawnPoint = playerSpawnRandomizer.GetRandomItem();
         var character = Instantiate(settings.characterPrefab, spawnPoint.position, spawnPoint.rotation);
         ThirdPersonCamera.Instance.SetTargetObject(character.playerTarget);
