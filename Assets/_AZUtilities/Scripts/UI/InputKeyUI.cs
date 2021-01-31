@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class InputKeyUI : MonoBehaviour
 {
-    public const string KeyboardSchemeName = "Keyboard";
+    public const string KeyboardSchemeName = "KeyboardMouse";
     public const string PS4SchemeName = "PS4";
     public const string XBoxSchemeName = "XBox";
 
@@ -118,7 +118,7 @@ public class InputKeyUI : MonoBehaviour
 
     public void Refresh()
     {
-        /*if (useInputActionAsset)
+        if (useInputActionAsset)
         {
             if (inputActionMap != null && GameManager.Instance.lastDetectedDevice != null)
             {
@@ -130,7 +130,7 @@ public class InputKeyUI : MonoBehaviour
                 }
             }
         }
-        else*/ if (playerInput)
+        else if (playerInput)
         {
             OnControlSchemeChanged(playerInput.currentControlScheme);
         }

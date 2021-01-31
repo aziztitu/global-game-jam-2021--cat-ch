@@ -28,7 +28,7 @@ public class HUDScreenManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DOTween.KillAll();
+        // DOTween.KillAll();
     }
 
     void Update()
@@ -53,6 +53,7 @@ public class HUDScreenManager : MonoBehaviour
             Debug.Log("moveright");
             menuPanel.DOAnchorPos(new Vector2(menuPanel.localPosition.x + offset, 0), smooth).SetUpdate(true);
             Time.timeScale = 0f;
+            HelperUtilities.UpdateCursorLock(false);
         }
         else
         {
@@ -63,6 +64,7 @@ public class HUDScreenManager : MonoBehaviour
                 menuPanel.DOAnchorPos(new Vector2(menuPanel.localPosition.x - offset, 0), smooth).SetUpdate(true);
             }
             Time.timeScale = 1;
+            HelperUtilities.UpdateCursorLock(true);
         }
 
         if (optionsOn)
@@ -80,6 +82,8 @@ public class HUDScreenManager : MonoBehaviour
             menuPanel.DOAnchorPos(new Vector2(menuPanel.localPosition.x - offset, 0), smooth).SetUpdate(true);
             optionsButtonTweenBack();
             gameIsPaused = !gameIsPaused;
+
+            PauseGame();
         }
     }
 
@@ -115,6 +119,5 @@ public class HUDScreenManager : MonoBehaviour
         text.DOText("A", delay, true, ScrambleMode.All);
         catsText.text = "";
         timerText.text = "";
-
     }
 }
