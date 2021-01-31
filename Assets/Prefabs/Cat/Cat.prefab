@@ -103,10 +103,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3070931843228665808}
   - component: {fileID: 3070931843228665811}
-  - component: {fileID: 3070931843228665822}
   - component: {fileID: 8957704553667741806}
   - component: {fileID: 3070931843228665823}
   - component: {fileID: 4634836649989635076}
+  - component: {fileID: 868464790940534304}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Untagged
@@ -144,7 +144,74 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!82 &3070931843228665822
+--- !u!195 &8957704553667741806
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3070931843228665812}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &3070931843228665823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3070931843228665812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 151b22b1ed5c99e45b5b4aa3ca861483, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nav: {fileID: 0}
+  hidingDistance: 0.55
+  inspectingDistance: 1.9
+  carHonkPercent: 40
+  catState: 1
+  maxMeowTimer:
+    min: 4.5
+    max: 6
+  maxCarTimer:
+    min: 1
+    max: 1.5
+  maxChangeLocationTimer:
+    min: 3
+    max: 5
+  meowSFX: Meow
+  catPopSFX: CatPopping
+  carVroomSFX: CarVroom
+  carHonkSFX: CarHonk
+--- !u!114 &4634836649989635076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3070931843228665812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5becaa6aabdc6c242abd1b5cc28349d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  catHiding: {fileID: 8233491192902661199}
+  catRunning: {fileID: 3119849105485901724}
+  currentAnim: {fileID: 0}
+--- !u!82 &868464790940534304
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -154,11 +221,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 68b313d81db3a7c4f8202000969d7caf, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -200,7 +267,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -240,73 +307,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!195 &8957704553667741806
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3070931843228665812}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 1
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
---- !u!114 &3070931843228665823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3070931843228665812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 151b22b1ed5c99e45b5b4aa3ca861483, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nav: {fileID: 0}
-  hidingDistance: 0.55
-  inspectingDistance: 1.9
-  catState: 1
-  maxMeowTimer:
-    min: 4.5
-    max: 6
-  maxChangeLocationTimer:
-    min: 3
-    max: 5
-  meowClips:
-  - {fileID: 8300000, guid: 290e3e2c208de5f49b9df2f71b602254, type: 3}
-  - {fileID: 8300000, guid: 38ac318a41aaf9944b73f45ff7a73428, type: 3}
-  - {fileID: 8300000, guid: bbddf9f059629f548ba940f6a4ba6dc8, type: 3}
-  - {fileID: 8300000, guid: 200916e7f208e6a47a99a32d407d3d9a, type: 3}
-  - {fileID: 8300000, guid: a35274df4807cb04f9477b28722f5a5d, type: 3}
-  - {fileID: 8300000, guid: 16c8700f296e11e4c973f6821685bb94, type: 3}
-  - {fileID: 8300000, guid: 35f431c5d1ebaef4a8ce70b907c1cfea, type: 3}
---- !u!114 &4634836649989635076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3070931843228665812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5becaa6aabdc6c242abd1b5cc28349d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  catHiding: {fileID: 8233491192902661199}
-  catRunning: {fileID: 3119849105485901724}
-  currentAnim: {fileID: 0}
 --- !u!1 &3119849105485901724
 GameObject:
   m_ObjectHideFlags: 0

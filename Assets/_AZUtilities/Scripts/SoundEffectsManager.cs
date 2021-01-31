@@ -40,6 +40,15 @@ public class SoundEffectsManager : SingletonMonoBehaviour<SoundEffectsManager>
         }
     }
 
+    public void PlayAt(string key, Vector3 position)
+    {
+        if (soundEffectsDict.ContainsKey(key))
+        {
+            PlayAt(soundEffectsDict[key], position);
+        }
+    }
+
+
     public void Play(AudioClip audioClip)
     {
         if (audioClip == null)

@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class CatController : MonoBehaviour
 {
     [HideInInspector] public NavMeshAgent nav;
+    private AudioSource carAudioSource;
     private CatModel catModel;
 
     private Transform currentHidingSpot = null;
@@ -17,6 +18,9 @@ public class CatController : MonoBehaviour
     [Tooltip("Should be greater than hidingDistance.")]
     [Range(1.5f,2)]
     public float inspectingDistance = 0;
+
+    [Range(0, 100)]
+    public int carHonkPercent = 0;
 
     public enum CatState
     {
@@ -30,18 +34,24 @@ public class CatController : MonoBehaviour
     public RangeFloat maxMeowTimer = new RangeFloat(0, 0);
     private float currentMeowBuffer = 0;
 
+    public RangeFloat maxCarTimer = new RangeFloat(0, 0);
+    private float currentCarBuffer = 0;
+    private bool shouldHonk = false;
+    private bool hasCarHonked = false;
+
     public RangeFloat maxChangeLocationTimer = new RangeFloat(0, 0);
     private float currentChangeLocationBuffer = 0;
 
-    [Header("Meows")]
-    public List<AudioClip> meowClips = new List<AudioClip>();
-    private AudioSource audioSource;
+    [Header("SFX Names")]
+    public string meowSFX;
+    public string catPopSFX;
+    public string carHonkSFX;
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
         nav = GetComponent<NavMeshAgent>();
         catModel = GetComponent<CatModel>();
+        carAudioSource = GetComponent<AudioSource>();
 
         currentMeowBuffer = maxMeowTimer.GetRandom();
         currentChangeLocationBuffer = maxChangeLocationTimer.GetRandom();
@@ -110,8 +120,29 @@ public class CatController : MonoBehaviour
 
     public void Meow()
     {
-        audioSource.clip = meowClips[Random.Range(0, meowClips.Count)];
-        audioSource.Play();
+        Debug.Log("Meow");
+        int randNumb = Random.Range(0, 101);
+
+        if (randNumb < 10)
+        {
+            SoundEffectsManager.Instance.PlayAt(catPopSFX, transform.position);
+        }
+        else
+        {
+            SoundEffectsManager.Instance.PlayAt($"{meowSFX}{Random.Range(1, 8)}", transform.position);
+        }
+    }
+
+    void CountDownCar()
+    {
+        currentCarBuffer -= Time.deltaTime;
+
+        if (currentCarBuffer <= 0 && !hasCarHonked)
+        {
+            SoundEffectsManager.Instance.PlayAt(carHonkSFX, transform.position);
+            hasCarHonked = true;
+            shouldHonk = false;
+        }
     }
 
     void CountDownRoam()
@@ -139,7 +170,11 @@ public class CatController : MonoBehaviour
                 case CatState.Hiding:
                     catModel.SetHidingAvatar();
                     ChangeCurrentHidingPlace();
-                    
+
+                    if (carAudioSource.isPlaying)
+                    {
+                        carAudioSource.Stop();
+                    }
                     break;
                 case CatState.Running:
                     catModel.SetRunningAvatar();
@@ -149,6 +184,16 @@ public class CatController : MonoBehaviour
                     {
                         CatManager.Instance.AddCurrentHidingSpot(currentHidingSpot);
                     }
+
+
+                    if (Random.Range(0,101) < carHonkPercent)
+                    {
+                        shouldHonk = true;
+                    }
+                    currentCarBuffer = maxCarTimer.GetRandom();
+                    hasCarHonked = false;
+
+                    carAudioSource.Play();
                     break;
             }
 
@@ -169,6 +214,11 @@ public class CatController : MonoBehaviour
                 {
                     CheckNewHidingSpot();
                 }
+
+                if (shouldHonk)
+                {
+                    CountDownCar();
+                }
                 break;
         }
     }
@@ -179,11 +229,6 @@ public class CatController : MonoBehaviour
         CountDownRoam();
         
         CatStateUpdates();
-
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            Destroy(this.gameObject);
-        }
     }
 
     private void OnDestroy()
