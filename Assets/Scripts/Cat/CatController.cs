@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using BasicTools.ButtonInspector;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -25,7 +26,8 @@ public class CatController : MonoBehaviour
     public enum CatState
     {
         Hiding,
-        Running
+        Running,
+        Caught
     }
 
     public CatState catState = CatState.Hiding;
@@ -43,6 +45,19 @@ public class CatController : MonoBehaviour
     public string meowSFX;
     public string catPopSFX;
     public string carHonkSFX;
+
+    [Header("Capture Debugging")]
+    [ButtonAttribute("Stop", "Stop")]
+    [SerializeField]
+    private bool _btnStop;
+
+    [ButtonAttribute("Resume", "Resume")]
+    [SerializeField]
+    private bool _btnResume;
+
+    [ButtonAttribute("Unwrap AI", "UnwrapAI")]
+    [SerializeField]
+    private bool _btnUnwrapAI;
 
     private void Awake()
     {
@@ -144,6 +159,42 @@ public class CatController : MonoBehaviour
         }
     }
 
+
+    public void Stop()
+    {
+        nav.isStopped = true;
+
+        if (carAudioSource.isPlaying)
+        {
+            carAudioSource.Pause();
+        }
+    }
+
+    public void Resume()
+    {
+        if (catState == CatState.Running)
+        {
+            FindNewHidingSpot();
+            carAudioSource.Play();
+        }
+
+        nav.isStopped = false;
+    }
+
+    public void UnwrapAI()
+    {
+        ChangeState(CatState.Caught);
+        nav.enabled = false;
+        
+        catModel.SetHidingAvatar();
+        catModel.enabled = false;
+        
+        carAudioSource.enabled = false;
+
+        this.gameObject.GetComponent<Collider>().enabled = false;
+    }
+
+
     public void ChangeState(CatState state)
     {
         if (catState != state)
@@ -157,6 +208,11 @@ public class CatController : MonoBehaviour
                     if (carAudioSource.isPlaying)
                     {
                         carAudioSource.Stop();
+                    }
+
+                    if (nav.isStopped == true)
+                    {
+                        nav.isStopped = false;
                     }
                     break;
                 case CatState.Running:
@@ -190,6 +246,10 @@ public class CatController : MonoBehaviour
         switch (catState)
         {
             case CatState.Hiding:
+                if (nav.isStopped == true)
+                {
+                    nav.isStopped = false;
+                }
 
                 break;
             case CatState.Running:
