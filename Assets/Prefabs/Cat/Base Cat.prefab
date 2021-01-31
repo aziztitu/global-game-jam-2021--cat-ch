@@ -102,6 +102,9 @@ MonoBehaviour:
   _btnStop: 0
   _btnResume: 0
   _btnUnwrapAI: 0
+  CagePrefab: {fileID: 5995447495919891926, guid: 6978ad213ed5f06418308dde760dd4aa,
+    type: 3}
+  CagePosition: {fileID: 0}
 --- !u!114 &4634836649989635076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,7 +232,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7409774550126187783
 Transform:
   m_ObjectHideFlags: 0
