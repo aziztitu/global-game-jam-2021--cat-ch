@@ -282,7 +282,15 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
 
                 PlaySFX("Sighing", 0.3f);
 
-                // Resume Cat Movement
+                if (selectedQteCat?.catState == CatController.CatState.Running)
+                {
+                    // Resume Cat Movement
+                    selectedQteCat?.Resume();
+                }
+                else
+                {
+                    selectedQteCat?.ChangeState(CatController.CatState.Running);
+                }
             }
 
             if (characterAnimEventHandler.qteIndex == 1)
@@ -291,7 +299,15 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
 
                 PlaySFX("Sighing", 0.1f);
 
-                // Resume Cat Movement
+                if (selectedQteCat?.catState == CatController.CatState.Running)
+                {
+                    // Resume Cat Movement
+                    selectedQteCat?.Resume();
+                }
+                else
+                {
+                    selectedQteCat?.ChangeState(CatController.CatState.Running);
+                }
             }
 
             qteErrorTint.DOFade(0.9f, 0.3f).Play();
@@ -360,9 +376,10 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
             return;
         }
 
+        selectedQteCat.UnwrapAI();
+
         selectedQteCat.transform.SetParent(hand);
         selectedQteCat.transform.DOLocalMove(Vector3.zero, 0.3f).Play();
-        selectedQteCat.nav.enabled = false;
 
         Destroy(selectedQteCat.gameObject, 1f);
 

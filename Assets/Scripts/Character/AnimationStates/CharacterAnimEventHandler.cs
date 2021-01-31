@@ -91,6 +91,7 @@ public class CharacterAnimEventHandler : KeyedStateController
             dashSpeed = HelperUtilities.Remap(toCat.magnitude, 0, owner.qteCatMaxRange, 0, dashSpeed);
 
             // Pause Cat Movement
+            cat.Stop();
         }
 
         owner.characterMovementController.DashTowards(dashTarget, dashSpeed, -1);
