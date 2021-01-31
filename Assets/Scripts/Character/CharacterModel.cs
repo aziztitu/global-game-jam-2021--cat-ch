@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -71,10 +72,13 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
     public Image qteFiller;
     public Image qteErrorTint;
     public List<InputKeyUI> qteIcons;
-    public float qteBaseDuration = 1.5f;
-    public float qteBaseTimeScale = 0.2f;
+    public RangeFloat qteDurationRange = new RangeFloat(1.0f, 1.7f);
+    public float qteBaseTimeScale = 0.15f;
     public float qteCatMaxRange = 10f;
     public float qteCatMaxAngle = 30f;
+
+    public RangeFloat qteXRange;
+    public RangeFloat qteYRange;
 
     private int selectedQte = 0;
     private CatController selectedQteCat = null;
@@ -223,6 +227,11 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
         }
     }
 
+    public void SetQteCat(CatController catController)
+    {
+        selectedQteCat = catController;
+    }
+
     public void Qte(AnimationEvent animEvent)
     {
         if (qteIcons.Count < 1)
@@ -232,12 +241,15 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
 
         if (!characterAnimEventHandler.qteSequenceFailed)
         {
-            if (characterAnimEventHandler.qteIndex == 0)
+            if (characterAnimEventHandler.qteIndex == 0 && selectedQteCat == null)
             {
                 var cat = FindCatInFront();
                 if (cat)
                 {
                     selectedQteCat = cat;
+
+                    // Pause Cat Movement
+                    selectedQteCat.Stop();
                 }
                 else
                 {
@@ -248,13 +260,22 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
 
             selectedQte = Random.Range(1, qteIcons.Count + 1);
             ShowSelectedQteIcon();
+
+            var qteX = qteXRange.GetRandom() * (Random.Range(0, 10) >= 5 ? 1 : -1);
+            var qteY = qteXRange.GetRandom() * (Random.Range(0, 10) >= 5 ? 1 : -1);
+            var qtePos = new Vector2(qteX, qteY);
+
+            qteButton.localPosition = qtePos;
+
             qteButton.gameObject.SetActive(true);
             qteErrorTint.DOFade(0, 0).Play();
 
             qteFiller.DOKill();
             qteFiller.fillAmount = 1;
 
-            var fillerTween = qteFiller.DOFillAmount(0, qteBaseDuration).SetUpdate(true).Play();
+            qteDurationRange.SelectRandom();
+
+            var fillerTween = qteFiller.DOFillAmount(0, qteDurationRange.selected).SetUpdate(true).Play();
 
             Time.timeScale = qteBaseTimeScale;
             qtePassed = false;
@@ -265,7 +286,7 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
                 StopCoroutine(qteCoroutine);
             }
 
-            qteCoroutine = this.WaitAndExecute(() => { EndQte(); }, qteBaseDuration, true);
+            qteCoroutine = this.WaitAndExecute(() => { EndQte(); }, qteDurationRange.selected, true);
         }
     }
 
@@ -281,16 +302,6 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
                 animator.SetTrigger("Fall");
 
                 PlaySFX("Sighing", 0.3f);
-
-                if (selectedQteCat?.catState == CatController.CatState.Running)
-                {
-                    // Resume Cat Movement
-                    selectedQteCat?.Resume();
-                }
-                else
-                {
-                    selectedQteCat?.ChangeState(CatController.CatState.Running);
-                }
             }
 
             if (characterAnimEventHandler.qteIndex == 1)
@@ -298,17 +309,34 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
                 animator.SetTrigger("FallHalf");
 
                 PlaySFX("Sighing", 0.1f);
+            }
 
-                if (selectedQteCat?.catState == CatController.CatState.Running)
+            if (selectedQteCat?.catState == CatController.CatState.Running)
+            {
+                // Resume Cat Movement
+                selectedQteCat?.Resume();
+            }
+            else
+            {
+                selectedQteCat?.ChangeState(CatController.CatState.Running);
+            }
+
+            var nearbyCats = FindCatsInRadius(2);
+            foreach (var cat in nearbyCats)
+            {
+                if (cat?.catState == CatController.CatState.Running)
                 {
                     // Resume Cat Movement
-                    selectedQteCat?.Resume();
+                    cat?.Resume();
                 }
                 else
                 {
-                    selectedQteCat?.ChangeState(CatController.CatState.Running);
+                    cat?.ChangeState(CatController.CatState.Running);
                 }
             }
+
+            selectedQteCat = null;
+
 
             qteErrorTint.DOFade(0.9f, 0.3f).Play();
             this.WaitAndExecute(() => { qteButton.gameObject.SetActive(false); }, 2f);
@@ -369,6 +397,12 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
         return null;
     }
 
+    public List<CatController> FindCatsInRadius(float radius)
+    {
+        var colliders = Physics.OverlapSphere(transform.position, qteCatMaxRange);
+        return colliders.Select(col => col.GetComponentInParent<CatController>()).Where(cat => cat != null).ToList();
+    }
+
     public void AttemptGrabCat()
     {
         if (characterAnimEventHandler.qteSequenceFailed || !selectedQteCat)
@@ -382,6 +416,8 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
         selectedQteCat.transform.DOLocalMove(Vector3.zero, 0.3f).Play();
 
         Destroy(selectedQteCat.gameObject, 1f);
+
+        selectedQteCat = null;
 
         catsFound++;
     }
