@@ -65,7 +65,7 @@ Material:
     - _OutlineSoftness: 0
     - _OutlineUVSpeedX: 0
     - _OutlineUVSpeedY: 0
-    - _OutlineWidth: 0.37
+    - _OutlineWidth: 0.05
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
     - _ScaleRatioA: 0.9
@@ -1327,8 +1327,8 @@ MonoBehaviour:
     atlasWidth: 1024
     atlasHeight: 1024
     characterSetSelectionMode: 6
-    characterSequence: 20-21,27,2D,30,3D,42-43,48-49,4D-55,57,59,5C,5F,61,63-66,68-69,6B-6E,6E-6F,6F-70,72-78,2026
-    referencedFontAssetGUID: afb3ae42764e51441ace30e47aada951
+    characterSequence: 20-21,27,2D,30,3D,42-43,48-49,4D-55,57,59,5C,5F,61,63-66,68-69,6B-70,72-78,2026
+    referencedFontAssetGUID: 0cf0c0214a31cf646b6ed7fd561ca2a9
     referencedTextAssetGUID: 
     fontStyle: 0
     fontStyleModifier: 0
