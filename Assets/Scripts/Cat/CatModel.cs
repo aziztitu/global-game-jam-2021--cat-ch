@@ -7,7 +7,14 @@ public class CatModel : MonoBehaviour
     public GameObject catHiding;
     public GameObject catRunning;
 
+    public ParticleSystem smokeParticles;
+
     public Animator currentAnim;
+
+    void Awake()
+    {
+        smokeParticles.Stop();
+    }
 
     public void SwitchCurrentModel()
     {
@@ -22,6 +29,8 @@ public class CatModel : MonoBehaviour
 
         catHiding.SetActive(!catHiding.activeInHierarchy);
         catRunning.SetActive(!catRunning.activeInHierarchy);
+
+        smokeParticles.Play();
     }
 
     public void SetHidingAvatar()
@@ -29,6 +38,8 @@ public class CatModel : MonoBehaviour
         currentAnim = catHiding.GetComponent<Animator>();
         catHiding.SetActive(true);
         catRunning.SetActive(false);
+
+        smokeParticles.Play();
     }
 
     public void SetRunningAvatar()
@@ -36,5 +47,7 @@ public class CatModel : MonoBehaviour
         currentAnim = catRunning.GetComponent<Animator>();
         catRunning.SetActive(true);
         catHiding.SetActive(false);
+
+        smokeParticles.Play();
     }
 }
