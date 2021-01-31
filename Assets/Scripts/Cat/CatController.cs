@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using BasicTools.ButtonInspector;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -25,15 +26,13 @@ public class CatController : MonoBehaviour
     public enum CatState
     {
         Hiding,
-        Running
+        Running,
+        Caught
     }
 
     public CatState catState = CatState.Hiding;
 
     [Header("Timers")]
-    public RangeFloat maxMeowTimer = new RangeFloat(0, 0);
-    private float currentMeowBuffer = 0;
-
     public RangeFloat maxCarTimer = new RangeFloat(0, 0);
     private float currentCarBuffer = 0;
     private bool shouldHonk = false;
@@ -47,13 +46,25 @@ public class CatController : MonoBehaviour
     public string catPopSFX;
     public string carHonkSFX;
 
+    [Header("Capture Debugging")]
+    [ButtonAttribute("Stop", "Stop")]
+    [SerializeField]
+    private bool _btnStop;
+
+    [ButtonAttribute("Resume", "Resume")]
+    [SerializeField]
+    private bool _btnResume;
+
+    [ButtonAttribute("Unwrap AI", "UnwrapAI")]
+    [SerializeField]
+    private bool _btnUnwrapAI;
+
     private void Awake()
     {
         nav = GetComponent<NavMeshAgent>();
         catModel = GetComponent<CatModel>();
         carAudioSource = GetComponent<AudioSource>();
 
-        currentMeowBuffer = maxMeowTimer.GetRandom();
         currentChangeLocationBuffer = maxChangeLocationTimer.GetRandom();
     }
 
@@ -71,8 +82,7 @@ public class CatController : MonoBehaviour
         }
         else
         {
-            //potentialHidingSpot = CatManager.Instance.FindOpenLocation(tempPlayer.transform.position, transform.position);
-            potentialHidingSpot = CatManager.Instance.FindOpenLocation();
+            potentialHidingSpot = CatManager.Instance.FindOpenLocation(CharacterModel.Instance.gameObject.transform.position, transform.position);
         }
         
         nav.SetDestination(potentialHidingSpot.position);
@@ -107,23 +117,11 @@ public class CatController : MonoBehaviour
         currentHidingSpot = newHidingSpot;
     }
 
-    void CountDownMeow()
-    {
-        currentMeowBuffer -= Time.deltaTime;
-
-        if (currentMeowBuffer <= 0)
-        {
-            Meow();
-            currentMeowBuffer = maxMeowTimer.GetRandom();
-        }
-    }
-
     public void Meow()
     {
-        Debug.Log("Meow");
         int randNumb = Random.Range(0, 101);
 
-        if (randNumb < 10)
+        if (randNumb < 5)
         {
             SoundEffectsManager.Instance.PlayAt(catPopSFX, transform.position);
         }
@@ -161,6 +159,42 @@ public class CatController : MonoBehaviour
         }
     }
 
+
+    public void Stop()
+    {
+        nav.isStopped = true;
+
+        if (carAudioSource.isPlaying)
+        {
+            carAudioSource.Pause();
+        }
+    }
+
+    public void Resume()
+    {
+        if (catState == CatState.Running)
+        {
+            FindNewHidingSpot();
+            carAudioSource.Play();
+        }
+
+        nav.isStopped = false;
+    }
+
+    public void UnwrapAI()
+    {
+        ChangeState(CatState.Caught);
+        nav.enabled = false;
+        
+        catModel.SetHidingAvatar();
+        catModel.enabled = false;
+        
+        carAudioSource.enabled = false;
+
+        this.gameObject.GetComponent<Collider>().enabled = false;
+    }
+
+
     public void ChangeState(CatState state)
     {
         if (catState != state)
@@ -174,6 +208,11 @@ public class CatController : MonoBehaviour
                     if (carAudioSource.isPlaying)
                     {
                         carAudioSource.Stop();
+                    }
+
+                    if (nav.isStopped == true)
+                    {
+                        nav.isStopped = false;
                     }
                     break;
                 case CatState.Running:
@@ -207,6 +246,10 @@ public class CatController : MonoBehaviour
         switch (catState)
         {
             case CatState.Hiding:
+                if (nav.isStopped == true)
+                {
+                    nav.isStopped = false;
+                }
 
                 break;
             case CatState.Running:
@@ -225,7 +268,6 @@ public class CatController : MonoBehaviour
 
     private void Update()
     {
-        CountDownMeow();
         CountDownRoam();
         
         CatStateUpdates();

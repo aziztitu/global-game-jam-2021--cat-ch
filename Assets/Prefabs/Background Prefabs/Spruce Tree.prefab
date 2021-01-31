@@ -93,11 +93,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -679072613198350165, guid: 27eb2d382bd40264391973278c7bd940,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e4cda066e32e74d4c9cfe4c2cd03ecdb, type: 2}
     - target: {fileID: 919132149155446097, guid: 27eb2d382bd40264391973278c7bd940,
         type: 3}
       propertyPath: m_Name
       value: SpruceTree
       objectReference: {fileID: 0}
+    - target: {fileID: 3727165502405644863, guid: 27eb2d382bd40264391973278c7bd940,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 52fdb3d5ec8e561429625d76598f7d4a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27eb2d382bd40264391973278c7bd940, type: 3}
 --- !u!4 &7170317240546690078 stripped
