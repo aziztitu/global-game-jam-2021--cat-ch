@@ -324,10 +324,10 @@ public static class HelperExtensions
 
     #region Volume
 
-    public static Tween DOWeight(this Volume self, float endValue, float duration)
+    /*public static Tween DOWeight(this Volume self, float endValue, float duration)
     {
         return DOTween.To(() => self.weight, value => self.weight = value, endValue, duration).SetTarget(self);
-    }
+    }*/
 
     #endregion
 }
