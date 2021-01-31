@@ -167,9 +167,10 @@ public class CharacterMovementController : MonoBehaviour
     {
         ApplyGravity();
 
-        if (characterModel.isDead)
+        if (LevelManager.Instance.isGameOver || characterModel.isDead)
         {
             Move(0);
+            UpdateFootstepVolume(0);
             return;
         }
 

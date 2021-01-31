@@ -259,6 +259,7 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
                 else
                 {
                     characterAnimEventHandler.qteSequenceFailed = true;
+                    RunawayNearbyCats();
                     return;
                 }
             }
@@ -326,19 +327,7 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
                 selectedQteCat?.ChangeState(CatController.CatState.Running);
             }
 
-            var nearbyCats = FindCatsInRadius(16).Where(cat => cat != selectedQteCat);
-            foreach (var cat in nearbyCats)
-            {
-                if (cat?.catState == CatController.CatState.Running)
-                {
-                    // Resume Cat Movement
-                    cat?.Resume();
-                }
-                else
-                {
-                    cat?.ChangeState(CatController.CatState.Running);
-                }
-            }
+            RunawayNearbyCats();
 
             selectedQteCat = null;
 
@@ -422,8 +411,21 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
         selectedQteCat.UnwrapAI();
 
         // Destroy(selectedQteCat.gameObject, 1f);
+        RunawayNearbyCats();
 
+        this.WaitAndExecute(() =>
+        {
+            selectedQteCat.PutInCage();
+            selectedQteCat = null;
+        }, 1f);
 
+        catsFound++;
+
+        AnnouncerPopups.Instance.ShowAnnouncement();
+    }
+
+    void RunawayNearbyCats()
+    {
         var nearbyCats = FindCatsInRadius(16).Where(cat => cat != selectedQteCat);
         foreach (var cat in nearbyCats)
         {
@@ -437,14 +439,6 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
                 cat?.ChangeState(CatController.CatState.Running);
             }
         }
-
-        this.WaitAndExecute(() =>
-        {
-            selectedQteCat.PutInCage();
-            selectedQteCat = null;
-        }, 1f);
-
-        catsFound++;
     }
 
     public void PlaySFX(string key, float volume = 1)
