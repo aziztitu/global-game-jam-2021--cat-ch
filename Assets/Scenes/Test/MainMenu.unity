@@ -52049,6 +52049,26 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 9153588379161727812, guid: 37880bae007129745b98a62be9ec794f,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.764151
+      objectReference: {fileID: 0}
+    - target: {fileID: 9153588379161727812, guid: 37880bae007129745b98a62be9ec794f,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.764151
+      objectReference: {fileID: 0}
+    - target: {fileID: 9153588379161727812, guid: 37880bae007129745b98a62be9ec794f,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.764151
+      objectReference: {fileID: 0}
+    - target: {fileID: 9153588379161727812, guid: 37880bae007129745b98a62be9ec794f,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291019715
+      objectReference: {fileID: 0}
     - target: {fileID: 9153588380211765991, guid: 37880bae007129745b98a62be9ec794f,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -52078,6 +52098,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9153588380720223615, guid: 37880bae007129745b98a62be9ec794f,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.764151
+      objectReference: {fileID: 0}
+    - target: {fileID: 9153588380720223615, guid: 37880bae007129745b98a62be9ec794f,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.764151
+      objectReference: {fileID: 0}
+    - target: {fileID: 9153588380720223615, guid: 37880bae007129745b98a62be9ec794f,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.764151
+      objectReference: {fileID: 0}
+    - target: {fileID: 9153588380720223615, guid: 37880bae007129745b98a62be9ec794f,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291019715
       objectReference: {fileID: 0}
     - target: {fileID: 9153588380747725980, guid: 37880bae007129745b98a62be9ec794f,
         type: 3}
