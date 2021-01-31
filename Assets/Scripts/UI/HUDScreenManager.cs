@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
@@ -95,6 +96,11 @@ public class HUDScreenManager : MonoBehaviour
     {
         optionPanel.DOAnchorPos(new Vector2(optionPanel.localPosition.x, optionPanel.localPosition.y - optionOffset), smooth).SetUpdate(true);
         optionsOn = !optionsOn;
+    }
+
+    public void toMain()
+    {
+
     }
 
     public void quitButton()
