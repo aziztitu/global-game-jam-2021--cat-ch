@@ -189,6 +189,8 @@ public class CharacterMovementController : MonoBehaviour
             {
                 isDodging = false;
             }
+
+            UpdateFootstepVolume(0);
         }
         else if (isDashing)
         {
@@ -200,6 +202,7 @@ public class CharacterMovementController : MonoBehaviour
             }
 
             UpdateMoveAnimation(0, true, false);
+            UpdateFootstepVolume(0);
         }
         else
         {
@@ -325,6 +328,9 @@ public class CharacterMovementController : MonoBehaviour
         float curSpeedFactor = HelperUtilities.Remap(curSpeed, 0, m_IsWalking ? m_WalkSpeed : m_RunSpeed, 0, 1) *
                                animVector.magnitude;
         UpdateMoveAnimation(curSpeedFactor, m_CharacterController.isGrounded, !m_IsWalking);
+
+        UpdateFootstepVolume(HelperUtilities.Remap(curSpeed, 0, m_IsWalking ? m_WalkSpeed : m_RunSpeed, 0, 1) *
+            characterModel.characterInput.Move.magnitude * characterModel.footstepMaxVolume);
     }
 
     void UpdateMoveAnimation(float forward, bool isGrounded, bool isSprinting)
@@ -333,6 +339,11 @@ public class CharacterMovementController : MonoBehaviour
 
         characterModel.animator.SetBool("IsGrounded", isGrounded);
         characterModel.animator.SetBool("IsSprinting", isSprinting);
+    }
+
+    void UpdateFootstepVolume(float vol)
+    {
+        characterModel.footstepAudio.volume = vol;
     }
 
     private void TPMove(float speed)
@@ -358,7 +369,7 @@ public class CharacterMovementController : MonoBehaviour
             desiredMove.Normalize();
         }
 
-        if (desiredMove.magnitude > 0 && speed > 0)
+        if (desiredMove.magnitude > 0 && speed > 0 && canMove)
         {
             //            Vector3 lookAtTarget = transform.position +
             //                                   (thirdPersonCamera.virtualCamera.transform.forward * 5);

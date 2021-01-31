@@ -71,4 +71,14 @@ public class SoundEffectsManager : SingletonMonoBehaviour<SoundEffectsManager>
         audioSource.transform.position = position;
         audioSource.PlayOneShot(audioClip);
     }
+
+    public AudioClip GetClip(string key)
+    {
+        if (soundEffectsDict.ContainsKey(key))
+        {
+            return soundEffectsDict[key];
+        }
+
+        return null;
+    }
 }

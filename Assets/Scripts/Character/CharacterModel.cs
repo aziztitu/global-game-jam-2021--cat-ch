@@ -44,6 +44,10 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
     public float playerTargetRotationSpeed = 10f;
 
     public Transform avatar;
+    public Transform hand;
+    public AudioSource footstepAudio;
+    public float footstepMaxVolume = 1f;
+    public AudioSource characterAudio;
 
     public Transform avatarModel
     {
@@ -65,6 +69,7 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
     [Header("QTE")] public GameObject qteUi;
     public RectTransform qteButton;
     public Image qteFiller;
+    public Image qteErrorTint;
     public List<InputKeyUI> qteIcons;
     public float qteBaseDuration = 1.5f;
     public float qteBaseTimeScale = 0.2f;
@@ -73,7 +78,8 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
 
     private int selectedQte = 0;
     private CatController selectedQteCat = null;
-
+    private bool qtePending = false;
+    private Coroutine qteCoroutine = null;
 
     [Header("Death")] public float deathAnimationDuration = 3f;
     public float playerHitCamShakeDuration = 1f;
@@ -86,6 +92,8 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
     public event Action onInitialized;
 
     [ReadOnly] public bool qtePassed = false;
+
+    public int catsFound = 0;
 
     new void Awake()
     {
@@ -208,8 +216,11 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
 
     public void OnQtePressed(int buttonPressed)
     {
-        qtePassed = selectedQte == buttonPressed;
-        EndQte();
+        if (characterAnimEventHandler.isInDivingState && !characterAnimEventHandler.qteSequenceFailed && qtePending)
+        {
+            qtePassed = selectedQte == buttonPressed;
+            EndQte();
+        }
     }
 
     public void Qte(AnimationEvent animEvent)
@@ -238,41 +249,81 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
             selectedQte = Random.Range(1, qteIcons.Count + 1);
             ShowSelectedQteIcon();
             qteButton.gameObject.SetActive(true);
+            qteErrorTint.DOFade(0, 0).Play();
+
+            qteFiller.DOKill();
+            qteFiller.fillAmount = 1;
+
+            var fillerTween = qteFiller.DOFillAmount(0, qteBaseDuration).SetUpdate(true).Play();
 
             Time.timeScale = qteBaseTimeScale;
             qtePassed = false;
+            qtePending = true;
 
-            this.WaitAndExecute(() =>
+            if (qteCoroutine != null)
             {
-                EndQte();
+                StopCoroutine(qteCoroutine);
+            }
 
-                if (!qtePassed)
-                {
-                    characterAnimEventHandler.qteSequenceFailed = true;
-                    if (characterAnimEventHandler.qteIndex == 0)
-                    {
-                        animator.SetTrigger("Fall");
-                    }
-                }
-            }, qteBaseDuration, true);
+            qteCoroutine = this.WaitAndExecute(() => { EndQte(); }, qteBaseDuration, true);
         }
     }
 
     public void EndQte()
     {
-        qteButton.gameObject.SetActive(false);
         Time.timeScale = 1;
+
+        if (!characterAnimEventHandler.qteSequenceFailed && !qtePassed)
+        {
+            characterAnimEventHandler.qteSequenceFailed = true;
+            if (characterAnimEventHandler.qteIndex == 0)
+            {
+                animator.SetTrigger("Fall");
+
+                PlaySFX("Sighing", 0.3f);
+
+                // Resume Cat Movement
+            }
+
+            if (characterAnimEventHandler.qteIndex == 1)
+            {
+                animator.SetTrigger("FallHalf");
+
+                PlaySFX("Sighing", 0.1f);
+
+                // Resume Cat Movement
+            }
+
+            qteErrorTint.DOFade(0.9f, 0.3f).Play();
+            this.WaitAndExecute(() => { qteButton.gameObject.SetActive(false); }, 2f);
+        }
+        else
+        {
+            qteButton.gameObject.SetActive(false);
+        }
+
+        if (qteCoroutine != null)
+        {
+            StopCoroutine(qteCoroutine);
+        }
+
+        qtePending = false;
     }
 
     public void ShowSelectedQteIcon()
     {
         for (int i = 0; i < qteIcons.Count; i++)
         {
-            qteIcons[i].gameObject.SetActive(selectedQte == i);
+            qteIcons[i].gameObject.SetActive(selectedQte == i + 1);
         }
     }
 
     public CatController FindCatInFront()
+    {
+        return FindCatInDirection(avatar.forward);
+    }
+
+    public CatController FindCatInDirection(Vector3 forward, float tooCloseThreshold = 0)
     {
         var colliders = Physics.OverlapSphere(transform.position, qteCatMaxRange);
         foreach (var col in colliders)
@@ -283,7 +334,12 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
                 var toCat = cat.transform.position - transform.position;
                 toCat.y = 0;
 
-                var yLessFwd = avatar.forward;
+                if (toCat.magnitude <= tooCloseThreshold)
+                {
+                    return cat;
+                }
+
+                var yLessFwd = forward;
                 yLessFwd.y = 0;
 
                 var angle = Vector3.Angle(toCat, yLessFwd);
@@ -303,5 +359,28 @@ public class CharacterModel : SingletonMonoBehaviour<CharacterModel>
         {
             return;
         }
+
+        selectedQteCat.transform.SetParent(hand);
+        selectedQteCat.transform.DOLocalMove(Vector3.zero, 0.3f).Play();
+        selectedQteCat.nav.enabled = false;
+
+        Destroy(selectedQteCat.gameObject, 1f);
+
+        catsFound++;
+    }
+
+    public void PlaySFX(string key, float volume = 1)
+    {
+        PlaySFX(SoundEffectsManager.Instance.GetClip(key), volume);
+    }
+
+    public void PlaySFX(AudioClip audioClip, float volume = 1)
+    {
+        if (audioClip == null)
+        {
+            return;
+        }
+
+        characterAudio.PlayOneShot(audioClip, volume);
     }
 }
