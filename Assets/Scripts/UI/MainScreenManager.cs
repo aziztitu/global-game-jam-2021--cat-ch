@@ -10,7 +10,6 @@ public class MainScreenManager : MonoBehaviour
     public RectTransform mainMenu;
     public RectTransform logoTrans;
     public Image logoImage;
-    public string swapToLevel = "";
 
     public int xOffset = 200;
     public int yOffset = 300;
@@ -75,7 +74,7 @@ public class MainScreenManager : MonoBehaviour
 
     public void changeLevel()
     {
-        GameManager.Instance.GoToScene(swapToLevel);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void quit()

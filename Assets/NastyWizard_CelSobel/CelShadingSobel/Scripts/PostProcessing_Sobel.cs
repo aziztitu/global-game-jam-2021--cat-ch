@@ -12,10 +12,12 @@ public class PostProcessing_Sobel : MonoBehaviour {
 
     public Color outlineColor;
 
+    public Shader s;
+
 
     void Start () {
         Camera.main.depthTextureMode = DepthTextureMode.Depth;
-        sobelMat = new Material(Shader.Find("Nasty-Screen/SobelOutline"));
+        sobelMat = new Material(s);
     }
 	
 	void OnRenderImage (RenderTexture source, RenderTexture destination)

@@ -97,7 +97,7 @@ public class SimpleTimer
 
     public void Update(bool useFixedDeltaTime = false)
     {
-        _elapsedTime += useFixedDeltaTime ? Time.fixedDeltaTime : Time.deltaTime;
+        _elapsedTime +=  Time.deltaTime;
     }
 
     public void Reset(bool expireImmediately = false)
